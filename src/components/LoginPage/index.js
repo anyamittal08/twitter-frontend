@@ -28,7 +28,8 @@ function LoginPage({ setAuthenticatedUser }) {
         }
     );
 
-    const onLogin = () => {
+    const onLogin = (e) => {
+        e.preventDefault();
         mutate({ email, password });
     };
 
@@ -40,44 +41,46 @@ function LoginPage({ setAuthenticatedUser }) {
     const renderLoginForm = () => {
         return (
             <Paper height="100%" sx={{ padding: '2em 6em' }}>
-                <Grid container direction="column" alignItems="center">
-                    <Typography
-                        variant="h4"
-                        sx={{
-                            padding: '0em 1em',
-                            margin: '0.5em 0em',
-                            fontWeight: 'bold',
-                        }}
-                    >
-                        Sign in to Twitter
-                    </Typography>
+                <form onSubmit={onLogin}>
+                    <Grid container direction="column" alignItems="center">
+                        <Typography
+                            variant="h4"
+                            sx={{
+                                padding: '0em 1em',
+                                margin: '0.5em 0em',
+                                fontWeight: 'bold',
+                            }}
+                        >
+                            Sign in to Twitter
+                        </Typography>
 
-                    <TextField
-                        label="Email"
-                        margin="dense"
-                        placeholder="bruce@wayne.com"
-                        onChange={(e) => setEmail(e.target.value)}
-                        fullWidth
-                    />
-                    <TextField
-                        label="Password"
-                        margin="dense"
-                        type="password"
-                        onChange={(e) => setPassword(e.target.value)}
-                        fullWidth
-                    />
+                        <TextField
+                            label="Email"
+                            margin="dense"
+                            placeholder="bruce@wayne.com"
+                            onChange={(e) => setEmail(e.target.value)}
+                            fullWidth
+                        />
+                        <TextField
+                            label="Password"
+                            margin="dense"
+                            type="password"
+                            onChange={(e) => setPassword(e.target.value)}
+                            fullWidth
+                        />
 
-                    <Button
-                        variant="contained"
-                        size="large"
-                        fullWidth
-                        disableElevation
-                        sx={{ margin: '2em 0em', bgcolor: '#000' }}
-                        onClick={onLogin}
-                    >
-                        <Typography color="white">Login</Typography>
-                    </Button>
-                </Grid>
+                        <Button
+                            variant="contained"
+                            type="submit"
+                            size="large"
+                            fullWidth
+                            disableElevation
+                            sx={{ margin: '2em 0em', bgcolor: '#000' }}
+                        >
+                            <Typography color="white">Login</Typography>
+                        </Button>
+                    </Grid>
+                </form>
             </Paper>
         );
     };
