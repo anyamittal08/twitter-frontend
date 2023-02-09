@@ -11,14 +11,16 @@ function ProfilePage() {
     const [tweets, setTweets] = useState([]);
 
     const fetchTweets = async (username) => {
-        const response1 = await fetch(`${config.api}/users/${username}`);
-        const data1 = await response1.json();
+        const { data: data1 } = await axios.get(
+            `${config.api}/users/${username}`
+        );
+        console.log(data1);
 
         const id = data1.userId;
-        console.log(id);
 
-        const response2 = await fetch(`${config.api}/users/${id}/tweets`);
-        const data2 = await response2.json();
+        const { data: data2 } = await axios.get(
+            `${config.api}/users/${id}/tweets`
+        );
         console.log(data2);
         return data2;
     };
@@ -26,8 +28,6 @@ function ProfilePage() {
     useEffect(() => {
         fetchTweets(username).then((res) => setTweets(res));
     }, []);
-
-    console.log(tweets);
 
     return (
         <>
