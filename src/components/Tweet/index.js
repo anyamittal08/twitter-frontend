@@ -6,6 +6,7 @@ import {
     Link,
     Typography,
 } from '@mui/material';
+import { Link as ReactRouterLink } from 'react-router-dom';
 import moment from 'moment';
 
 function Tweet({ tweet }) {
@@ -16,6 +17,8 @@ function Tweet({ tweet }) {
             </ListItemAvatar>
             <ListItemText>
                 <Link
+                    component={ReactRouterLink}
+                    to={`/${tweet.author.username}`}
                     underline="hover"
                     color="black"
                     sx={{ fontWeight: 'bold', cursor: 'pointer' }}

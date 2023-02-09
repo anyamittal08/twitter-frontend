@@ -4,6 +4,7 @@ import { UserProvider } from '../contexts/auth';
 
 import HomePage from './HomePage';
 import LoginPage from './LoginPage';
+import ProfilePage from './ProfilePage';
 
 const GuardedRoute = ({ children }) => {
     const auth = localStorage.getItem('auth');
@@ -42,6 +43,7 @@ function Router() {
                         </GuardedRoute>
                     }
                 />
+                <Route path="/:username" element={<ProfilePage />} />
             </Routes>
         </BrowserRouter>
     );
