@@ -5,6 +5,8 @@ import { UserProvider } from '../contexts/auth';
 import HomePage from './HomePage';
 import LoginPage from './LoginPage';
 import ProfilePage from './ProfilePage';
+import FollowersPage from './FollowersPage';
+import FollowingPage from './FollowingPage';
 
 const GuardedRoute = ({ children }) => {
     const auth = localStorage.getItem('auth');
@@ -44,6 +46,14 @@ function Router() {
                     }
                 />
                 <Route path="/:username" element={<ProfilePage />} />
+                <Route
+                    path="/:username/followers"
+                    element={<FollowersPage />}
+                />
+                <Route
+                    path="/:username/following"
+                    element={<FollowingPage />}
+                />
             </Routes>
         </BrowserRouter>
     );

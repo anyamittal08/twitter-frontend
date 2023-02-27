@@ -99,7 +99,7 @@ function HomePage() {
                             </Grid>
                         </ListItem>
                         {tweets.data.map((tweet) => (
-                            <Tweet tweet={tweet} />
+                            <Tweet tweet={tweet} key={tweet.id} />
                         ))}
                     </List>
                 </Grid>
