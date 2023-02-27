@@ -1,42 +1,33 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
 
 import config from '../../config';
 
 const FollowersPage = () => {
     const { username } = useParams();
-    const [followers, setFollowers] = useState([]);
 
-    useEffect(() => {
-        async function fetchFollowers() {
-            try {
-                const { data: userData } = await axios.get(
-                    `${config.api}/users/${username}`
-                );
-                const userId = userData.userId;
+    const { data: userData } = useQuery('userData', () =>
+        axios.get(`${config.api}/users/${username}`).then((res) => res.data)
+    );
 
-                const { data: followersData } = await axios.get(
-                    `${config.api}/users/${userId}/followers`
-                );
-                const followers = followersData.map(
-                    (relationship) => relationship.follower
-                );
-
-                setFollowers(followers);
-            } catch (err) {
-                console.log(err);
-            }
+    const { data: followerData } = useQuery(
+        'followerData',
+        () =>
+            axios
+                .get(`${config.api}/users/${userData?.userId}/followers`)
+                .then((res) => res.data),
+        {
+            enabled: !!userData?.userId,
         }
-        fetchFollowers();
-    }, []);
+    );
 
     return (
         <div>
-            {followers.map((follower) => {
+            {followerData?.map((follower) => {
                 return (
                     <ul>
-                        <li>{follower.displayName}</li>
+                        <li>{follower.follower.displayName}</li>
                     </ul>
                 );
             })}
