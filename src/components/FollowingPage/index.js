@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
 import config from '../../config';
+import UserList from '../UserList';
 
 const FollowingPage = () => {
     const { username } = useParams();
@@ -16,23 +17,15 @@ const FollowingPage = () => {
         () =>
             axios
                 .get(`${config.api}/users/${userData?.userId}/following`)
-                .then((res) => res.data),
+                .then((res) =>
+                    res.data.map((relationship) => relationship.targetUser)
+                ),
         {
             enabled: !!userData?.userId,
         }
     );
 
-    return (
-        <div>
-            {followingData?.map((following) => {
-                return (
-                    <ul>
-                        <li>{following.targetUser.displayName}</li>
-                    </ul>
-                );
-            })}
-        </div>
-    );
+    return <UserList usersArr={followingData} />;
 };
 
 export default FollowingPage;
