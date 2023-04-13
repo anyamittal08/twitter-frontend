@@ -16,12 +16,12 @@ const FollowingPage = () => {
         'followingData',
         () =>
             axios
-                .get(`${config.api}/users/${userData?.userId}/following`)
+                .get(`${config.api}/users/${userData?.id}/following`)
                 .then((res) =>
                     res.data.map((relationship) => relationship.targetUser)
                 ),
         {
-            enabled: !!userData?.userId,
+            enabled: !!userData?.id,
         }
     );
 

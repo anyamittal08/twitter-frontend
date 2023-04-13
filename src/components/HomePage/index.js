@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 import {
     List,
@@ -21,6 +22,9 @@ import LogoutBtn from '../LogoutBtn';
 function HomePage() {
     const auth = useContext(UserContext);
     const [newTweet, setNewTweet] = useState('');
+    const [searchQuery, setQuery] = useState('');
+
+    const navigate = useNavigate();
 
     const {
         isLoading,
@@ -44,6 +48,25 @@ function HomePage() {
         setNewTweet('');
     });
 
+    async function fetchSearchResults(e) {
+        e.preventDefault();
+        await axios
+            .get(`${config.api}/tweets/search/${searchQuery}`)
+            .then((res) => console.log(res.data));
+        navigate(`/search?q=${searchQuery}`);
+    }
+
+    const storeRecentSearchHistory = (searchQuery) => {
+        localStorage.getItem('searchHistory')
+            ? localStorage.getItem('searchHistory').append(searchQuery)
+            : localStorage.setItem(
+                  'searchHistory',
+                  JSON.stringify([searchQuery])
+              );
+
+        console.log(localStorage.getItem('searchHistory'));
+    };
+
     if (isLoading) return <div>loading...</div>;
     if (error) return <div>error!!</div>;
 
@@ -56,6 +79,16 @@ function HomePage() {
         <>
             <div style={{ float: 'right' }}>
                 <LogoutBtn />
+                <form onSubmit={storeRecentSearchHistory}>
+                    <TextField
+                        id="filled-search"
+                        label="Search Twitter"
+                        type="search"
+                        variant="filled"
+                        value={searchQuery}
+                        onChange={(e) => setQuery(e.target.value)}
+                    />
+                </form>
             </div>
             <Grid container>
                 <Grid item xs={3}></Grid>
@@ -99,7 +132,11 @@ function HomePage() {
                             </Grid>
                         </ListItem>
                         {tweets.data.map((tweet) => (
-                            <Tweet tweet={tweet} key={tweet._id} />
+                            <Tweet
+                                tweet={tweet}
+                                key={tweet._id}
+                                retweeters={tweet.retweetingFollows}
+                            />
                         ))}
                     </List>
                 </Grid>

@@ -5,41 +5,42 @@ import { useQuery } from 'react-query';
 import config from '../../config';
 import Tweet from '../Tweet';
 
+import { UserContext } from '../../contexts/auth';
+import { useContext } from 'react';
+
 function ProfilePage() {
+    const auth = useContext(UserContext);
     const { username } = useParams();
 
-    const fetchTweets = async (username) => {
-        const { data: data1 } = await axios.get(
-            `${config.api}/users/${username}`
-        );
+    const { data: userData } = useQuery('userData', () =>
+        axios.get(`${config.api}/users/${username}`).then((res) => res.data)
+    );
 
-        const id = data1.userId;
-
-        const { data: data2 } = await axios.get(
-            `${config.api}/users/${id}/tweets`
-        );
-        return data2;
-    };
-
-    const {
-        isLoading,
-        isError,
-        data: tweets,
-        error,
-    } = useQuery(['tweets', username], () => fetchTweets(username));
-
-    if (isLoading) {
-        return <span>Loading...</span>;
-    }
-
-    if (isError) {
-        return <span>Error: {error.message}</span>;
-    }
+    const { data: tweets } = useQuery(
+        'tweets',
+        () =>
+            axios
+                .get(`${config.api}/users/${userData?.id}/tweets`, {
+                    headers: { authorization: `Bearer ${auth.token}` },
+                })
+                .then((res) => res.data.map((tweet) => tweet)),
+        {
+            enabled: !!userData?.id,
+        }
+    );
 
     return (
         <>
-            {tweets.map((tweet) => {
-                return <Tweet tweet={tweet} key={tweet.id} />;
+            {tweets?.map((tweet) => {
+                const retweeter = tweet.retweetedByUser ? [userData] : [];
+                return (
+                    <Tweet
+                        tweet={tweet}
+                        user={username}
+                        key={tweet._id}
+                        retweeters={retweeter}
+                    />
+                );
             })}
         </>
     );

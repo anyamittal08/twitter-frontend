@@ -23,7 +23,6 @@ function LoginPage({ setAuthenticatedUser }) {
                     password: password,
                 }
             );
-
             return { body, status };
         }
     );
@@ -35,6 +34,7 @@ function LoginPage({ setAuthenticatedUser }) {
 
     if (isSuccess && data.status === 200) {
         setAuthenticatedUser(data.body);
+        console.log(setAuthenticatedUser);
         return <Navigate to="/home" />;
     }
 

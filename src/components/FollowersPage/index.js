@@ -16,12 +16,12 @@ const FollowersPage = () => {
         'followerData',
         () =>
             axios
-                .get(`${config.api}/users/${userData?.userId}/followers`)
+                .get(`${config.api}/users/${userData?.id}/followers`)
                 .then((res) =>
                     res.data.map((relationship) => relationship.follower)
                 ),
         {
-            enabled: !!userData?.userId,
+            enabled: !!userData?.id,
         }
     );
 

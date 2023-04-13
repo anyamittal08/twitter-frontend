@@ -7,6 +7,10 @@ import LoginPage from './LoginPage';
 import ProfilePage from './ProfilePage';
 import FollowersPage from './FollowersPage';
 import FollowingPage from './FollowingPage';
+import LikesPage from './LikesPage';
+import SearchResultsPage from './SearchResultsPage';
+import TweetSearch from './TweetSearch';
+import TweetRepliesPage from './TweetRepliesPage';
 
 const GuardedRoute = ({ children }) => {
     const auth = localStorage.getItem('auth');
@@ -45,7 +49,15 @@ function Router() {
                         </GuardedRoute>
                     }
                 />
-                <Route path="/:username" element={<ProfilePage />} />
+                <Route
+                    path="/:username"
+                    element={
+                        <GuardedRoute>
+                            <ProfilePage />
+                        </GuardedRoute>
+                    }
+                />
+                <Route path="/:username/likes" element={<LikesPage />} />
                 <Route
                     path="/:username/followers"
                     element={<FollowersPage />}
@@ -54,6 +66,12 @@ function Router() {
                     path="/:username/following"
                     element={<FollowingPage />}
                 />
+                <Route
+                    path="/:username/status/:tweetId"
+                    element={<TweetRepliesPage />}
+                />
+                <Route path="/search" element={<SearchResultsPage />} />
+                <Route path="/search/tweets" element={<TweetSearch />} />
             </Routes>
         </BrowserRouter>
     );
