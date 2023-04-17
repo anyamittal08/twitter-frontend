@@ -16,8 +16,8 @@ import {
 
 import config from '../../config';
 import { UserContext } from '../../contexts/auth';
-import Tweet from '../Tweet';
-import LogoutBtn from '../LogoutBtn';
+import Tweet from '../../components/Tweet';
+import LogoutBtn from '../../components/LogoutBtn';
 
 function HomePage() {
     const auth = useContext(UserContext);

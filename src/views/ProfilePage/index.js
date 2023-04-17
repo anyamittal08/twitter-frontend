@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
 import config from '../../config';
-import Tweet from '../Tweet';
+import Tweet from '../../components/Tweet';
 
 import { UserContext } from '../../contexts/auth';
 import { useContext } from 'react';
@@ -32,13 +32,11 @@ function ProfilePage() {
     return (
         <>
             {tweets?.map((tweet) => {
-                const retweeter = tweet.retweetedByUser ? [userData] : [];
                 return (
                     <Tweet
                         tweet={tweet}
-                        user={username}
                         key={tweet._id}
-                        retweeters={retweeter}
+                        displayName={userData?.displayName}
                     />
                 );
             })}

@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
-import Tweet from '../Tweet';
+import Tweet from '../../components/Tweet';
 import axios from 'axios';
 import config from '../../config';
 import { List } from '@mui/material';

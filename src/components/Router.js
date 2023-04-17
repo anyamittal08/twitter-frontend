@@ -2,15 +2,17 @@ import { BrowserRouter, Routes, Navigate, Route } from 'react-router-dom';
 
 import { UserProvider } from '../contexts/auth';
 
-import HomePage from './HomePage';
-import LoginPage from './LoginPage';
-import ProfilePage from './ProfilePage';
-import FollowersPage from './FollowersPage';
-import FollowingPage from './FollowingPage';
-import LikesPage from './LikesPage';
-import SearchResultsPage from './SearchResultsPage';
+import HomePage from '../views/HomePage';
+import LoginPage from '../views/LoginPage';
+import ProfilePage from '../views/ProfilePage';
+import FollowersPage from '../views/FollowersPage';
+import FollowingPage from '../views/FollowingPage';
+import LikesPage from '../views/LikesPage';
+import SearchResultsPage from '../views/SearchResultsPage';
 import TweetSearch from './TweetSearch';
-import TweetRepliesPage from './TweetRepliesPage';
+import TweetRepliesPage from '../views/TweetRepliesPage';
+import LikedByPage from '../views/LikingUsersPage';
+import RetweetedByPage from '../views/RetweetedByPage';
 
 const GuardedRoute = ({ children }) => {
     const auth = localStorage.getItem('auth');
@@ -72,6 +74,11 @@ function Router() {
                 />
                 <Route path="/search" element={<SearchResultsPage />} />
                 <Route path="/search/tweets" element={<TweetSearch />} />
+                <Route path="/:tweetId/likedBy" element={<LikedByPage />} />
+                <Route
+                    path="/:tweetId/retweetedBy"
+                    element={<RetweetedByPage />}
+                />
             </Routes>
         </BrowserRouter>
     );

@@ -3,7 +3,7 @@ import config from '../../config';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 
-import Tweet from '../Tweet';
+import Tweet from '../../components/Tweet';
 
 const LikesPage = () => {
     const { username } = useParams();
@@ -16,7 +16,7 @@ const LikesPage = () => {
         'likedTweets',
         () =>
             axios
-                .get(`${config.api}/users/${userData?.id}/likes`)
+                .get(`${config.api}/users/${userData?.id}/likedTweets`)
                 .then((res) => res.data.map((like) => like.tweet)),
         {
             enabled: !!userData?.id,
@@ -25,10 +25,9 @@ const LikesPage = () => {
 
     return (
         <>
-            {likedTweets?.map((tweet) => {
-                console.log(tweet);
-                return <div>{JSON.stringify(tweet)}</div>;
-            })}
+            {likedTweets?.map((tweet) => (
+                <Tweet tweet={tweet} />
+            ))}
         </>
     );
 };

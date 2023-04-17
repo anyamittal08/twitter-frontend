@@ -1,6 +1,6 @@
 import { Stack } from '@mui/system';
 
-import User from '../User';
+import User from '../../components/User';
 
 const UserList = ({ usersArr }) => {
     return (

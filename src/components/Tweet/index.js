@@ -1,23 +1,25 @@
 import axios from 'axios';
-import {
-    Box,
-    ListItem,
-    ListItemText,
-    ListItemAvatar,
-    Avatar,
-    Link,
-    Typography,
-    Button,
-} from '@mui/material';
 import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
-import moment from 'moment';
+
+import { ListItemAvatar, Avatar, Link } from '@mui/material';
 
 import config from '../../config';
 import { UserContext } from '../../contexts/auth';
 import { useContext } from 'react';
 
-function Tweet({ tweet, retweeters }) {
+import {
+    Time,
+    ReplyButton,
+    RetweetButton,
+    LikeButton,
+    MoreOptionsButton,
+} from '../Buttons';
+import { Message, Author, Retweeters } from '../TweetComponents';
+
+import './styles.css';
+
+function Tweet({ tweet, displayName }) {
     const auth = useContext(UserContext);
     const queryClient = useQueryClient();
     const navigate = useNavigate();
@@ -44,7 +46,7 @@ function Tweet({ tweet, retweeters }) {
 
     const { mutate: sendUnlike } = useMutation(
         async () => {
-            await axios.delete(`${config.api}/tweets/${tweet._id}/unlike`, {
+            await axios.delete(`${config.api}/tweets/${tweet._id}/like`, {
                 headers: {
                     Authorization: `Bearer ${auth.token}`,
                 },
@@ -60,9 +62,10 @@ function Tweet({ tweet, retweeters }) {
 
     const likeAndUnlikeTweet = async (e) => {
         e.preventDefault();
-        if (e.target.innerText === 'LIKE') {
+        if (!tweet.liked) {
             sendLike();
-        } else if (e.target.innerText === 'UNLIKE') {
+            console.log('liked');
+        } else if (tweet.liked) {
             sendUnlike();
         }
     };
@@ -105,38 +108,44 @@ function Tweet({ tweet, retweeters }) {
 
     const retweetAndUndo = async (e) => {
         e.preventDefault();
-        if (e.target.innerText === 'RETWEET') {
+        if (!tweet.retweeted) {
             sendRetweet();
-        } else if (e.target.innerText === 'UNDO RT') {
+        } else if (tweet.retweeted) {
             undoRetweet();
         }
     };
 
     return (
-        <ListItem
-            alignItems={'flex-start'}
-            divider={true}
-            key={tweet._id}
-            sx={{ cursor: 'pointer' }}
-            onClick={() =>
-                navigate(`/${tweet.author.username}/status/${tweet._id}`)
-            }
-        >
-            {/* <Link
-                component={ReactRouterLink}
-                to={`/${retweeters[0]?.username}`}
-                underline="hover"
-                color="black"
-                sx={{ fontWeight: 'bold', cursor: 'pointer' }}
-            >
-                {retweeters.length > 0
-                    ? `${retweeters[0].displayName} Retweeted`
-                    : ''}
-            </Link> */}
-            <ListItemAvatar>
-                <Avatar alt="profile-pic" />
-            </ListItemAvatar>
-            <ListItemText>
+        <div className="tweet-container">
+            <Retweeters
+                retweeters={tweet.followedRetweeters}
+                retweetedByUser={tweet.retweetedByUser}
+                displayName={displayName}
+            />
+            <div className="tweet">
+                <Avatar className="avatar" alt="profile-pic" />
+
+                <div className="content">
+                    <Author author={tweet.author} />
+                    <Time timestamp={tweet.createdAt} />
+                    <Message content={tweet.content} />
+                </div>
+            </div>
+            <div className="buttons">
+                <ReplyButton replyCount={tweet.replyCount} />
+                <RetweetButton
+                    onClick={retweetAndUndo}
+                    retweetCount={tweet.retweetCount}
+                    retweeted={tweet.retweeted}
+                />
+                <LikeButton
+                    onClick={likeAndUnlikeTweet}
+                    likeCount={tweet.likeCount}
+                    liked={tweet.liked}
+                />
+                <MoreOptionsButton />
+            </div>
+            {/* <ListItemText>
                 <Link
                     component={ReactRouterLink}
                     to={`/${tweet.author.username}`}
@@ -146,7 +155,7 @@ function Tweet({ tweet, retweeters }) {
                 >
                     {tweet.author.displayName}
                 </Link>
-                <Typography
+                <p
                     compoment="span"
                     sx={{
                         display: 'inline',
@@ -154,21 +163,15 @@ function Tweet({ tweet, retweeters }) {
                     }}
                 >
                     {`@${tweet.author.username}`} ·
-                </Typography>
-                <Typography compoment="span" sx={{ display: 'inline' }}>
+                </p>
+                <p compoment="span" sx={{ display: 'inline' }}>
                     {moment(tweet.createdAt).fromNow()}
-                </Typography>
-                <Typography>{tweet.content}</Typography>
+                </p>
+                <p>{tweet.content}</p>
             </ListItemText>
-            <Button variant="contained" onClick={likeAndUnlikeTweet}>
-                {tweet.liked ? `UNLIKE` : `LIKE`}
-            </Button>
-            <Typography>{tweet.likeCount}</Typography>
-            <Button variant="contained" onClick={retweetAndUndo}>
-                {tweet.retweeted ? `UNDO RT` : `RETWEET`}
-            </Button>
-            <Typography>{tweet.retweetCount}</Typography>
-        </ListItem>
+
+            */}
+        </div>
     );
 }
 
