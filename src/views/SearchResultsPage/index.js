@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
 import config from '../../config';
-import User from '../../components/User';
+import User from '../../components/User/UserWithBio';
 import { Link } from 'react-router-dom';
 
 const SearchResultsPage = () => {

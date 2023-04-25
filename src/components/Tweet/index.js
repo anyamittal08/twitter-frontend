@@ -2,20 +2,19 @@ import axios from 'axios';
 import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { ListItemAvatar, Avatar, Link } from '@mui/material';
+import { ListItemAvatar, Avatar, Link, Divider } from '@mui/material';
 
 import config from '../../config';
 import { UserContext } from '../../contexts/auth';
 import { useContext } from 'react';
 
 import {
-    Time,
     ReplyButton,
     RetweetButton,
     LikeButton,
     MoreOptionsButton,
 } from '../Buttons';
-import { Message, Author, Retweeters } from '../TweetComponents';
+import { Message, Author, Retweeters, Time } from '../TweetComponents';
 
 import './styles.css';
 
@@ -116,61 +115,38 @@ function Tweet({ tweet, displayName }) {
     };
 
     return (
-        <div className="tweet-container">
-            <Retweeters
-                retweeters={tweet.followedRetweeters}
-                retweetedByUser={tweet.retweetedByUser}
-                displayName={displayName}
-            />
-            <div className="tweet">
-                <Avatar className="avatar" alt="profile-pic" />
+        <div>
+            <div className="tweet-container" style={{ paddingBottom: '0px' }}>
+                <Retweeters
+                    retweeters={tweet.followedRetweeters}
+                    retweetedByUser={tweet.retweetedByUser}
+                    displayName={displayName}
+                />
+                <div className="tweet">
+                    <Avatar className="avatar" alt="profile-pic" />
 
-                <div className="content">
-                    <Author author={tweet.author} />
-                    <Time timestamp={tweet.createdAt} />
-                    <Message content={tweet.content} />
+                    <div className="content">
+                        <Author author={tweet.author} />
+                        <Time timestamp={tweet.createdAt} />
+                        <Message content={tweet.content} />
+                    </div>
+                </div>
+                <div className="buttons" style={{ marginTop: '0px' }}>
+                    <ReplyButton replyCount={tweet.replyCount} />
+                    <RetweetButton
+                        onClick={retweetAndUndo}
+                        retweetCount={tweet.retweetCount}
+                        retweeted={tweet.retweeted}
+                    />
+                    <LikeButton
+                        onClick={likeAndUnlikeTweet}
+                        likeCount={tweet.likeCount}
+                        liked={tweet.liked}
+                    />
+                    <MoreOptionsButton />
                 </div>
             </div>
-            <div className="buttons">
-                <ReplyButton replyCount={tweet.replyCount} />
-                <RetweetButton
-                    onClick={retweetAndUndo}
-                    retweetCount={tweet.retweetCount}
-                    retweeted={tweet.retweeted}
-                />
-                <LikeButton
-                    onClick={likeAndUnlikeTweet}
-                    likeCount={tweet.likeCount}
-                    liked={tweet.liked}
-                />
-                <MoreOptionsButton />
-            </div>
-            {/* <ListItemText>
-                <Link
-                    component={ReactRouterLink}
-                    to={`/${tweet.author.username}`}
-                    underline="hover"
-                    color="black"
-                    sx={{ fontWeight: 'bold', cursor: 'pointer' }}
-                >
-                    {tweet.author.displayName}
-                </Link>
-                <p
-                    compoment="span"
-                    sx={{
-                        display: 'inline',
-                        padding: '0.3em',
-                    }}
-                >
-                    {`@${tweet.author.username}`} ·
-                </p>
-                <p compoment="span" sx={{ display: 'inline' }}>
-                    {moment(tweet.createdAt).fromNow()}
-                </p>
-                <p>{tweet.content}</p>
-            </ListItemText>
-
-            */}
+            <Divider />
         </div>
     );
 }

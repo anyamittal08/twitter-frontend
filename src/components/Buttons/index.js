@@ -8,42 +8,92 @@ import {
     faHeart as faHeartSolid,
     faEllipsis,
 } from '@fortawesome/free-solid-svg-icons';
-
-import moment from 'moment';
-
+import { Button, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import 'normalize.css';
 import './styles.css';
 
-const Time = ({ timestamp }) => (
-    <span className="time">{moment(timestamp).fromNow()}</span>
+const ButtonText = styled(Typography)(() => ({
+    variant: 'body2',
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: '1.2em',
+}));
+
+const BasicButton = styled(Button)(() => ({
+    borderRadius: '35px',
+    padding: '6px 12px',
+    textTransform: 'none',
+    boxShadow: 'none',
+    '&:hover': {
+        borderRadius: 30,
+    },
+}));
+
+const FollowButton = () => (
+    <BasicButton
+        variant="contained"
+        sx={{ backgroundColor: 'black', padding: '3px 15px 3px 15px' }}
+    >
+        <ButtonText>Follow</ButtonText>
+    </BasicButton>
 );
+
+const TweetButton = ({ width, onClick }) => (
+    <BasicButton
+        variant="contained"
+        color="primary"
+        sx={{ width: width }}
+        onClick={onClick}
+    >
+        <ButtonText>Tweet</ButtonText>
+    </BasicButton>
+);
+
 const ReplyButton = ({ replyCount, onClick }) => (
-    <div style={{ display: 'flex' }}>
-        <FontAwesomeIcon onClick={onClick} icon={faComment} />
+    <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+        <FontAwesomeIcon
+            onClick={onClick}
+            icon={faComment}
+            style={{ cursor: 'pointer' }}
+        />
         <p>{replyCount}</p>
     </div>
 );
 
 const RetweetButton = ({ retweeted, retweetCount, onClick }) => (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
         <FontAwesomeIcon
             onClick={onClick}
             icon={faRetweet}
             color={retweeted ? 'green' : ''}
+            style={{ cursor: 'pointer' }}
         />
         <p>{retweetCount}</p>
     </div>
 );
 const LikeButton = ({ liked, likeCount, onClick }) => (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
         <FontAwesomeIcon
             onClick={onClick}
             icon={liked ? faHeartSolid : faHeartOutline}
             color={liked ? 'red' : ''}
+            style={{ cursor: 'pointer' }}
         />
         <p>{likeCount}</p>
     </div>
 );
-const MoreOptionsButton = () => <FontAwesomeIcon icon={faEllipsis} />;
+const MoreOptionsButton = () => (
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+        <FontAwesomeIcon style={{ cursor: 'pointer' }} icon={faEllipsis} />
+    </div>
+);
 
-export { Time, ReplyButton, RetweetButton, LikeButton, MoreOptionsButton };
+export {
+    ReplyButton,
+    RetweetButton,
+    LikeButton,
+    MoreOptionsButton,
+    TweetButton,
+    FollowButton,
+};

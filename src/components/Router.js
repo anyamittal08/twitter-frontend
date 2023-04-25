@@ -13,6 +13,7 @@ import TweetSearch from './TweetSearch';
 import TweetRepliesPage from '../views/TweetRepliesPage';
 import LikedByPage from '../views/LikingUsersPage';
 import RetweetedByPage from '../views/RetweetedByPage';
+import Layout from './Layout';
 
 const GuardedRoute = ({ children }) => {
     const auth = localStorage.getItem('auth');
@@ -42,43 +43,92 @@ function Router() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<IndexRoute />} />
                 <Route
                     path="/home"
                     element={
                         <GuardedRoute>
-                            <HomePage />
+                            <Layout>
+                                <HomePage />
+                            </Layout>
                         </GuardedRoute>
                     }
                 />
+
                 <Route
                     path="/:username"
                     element={
                         <GuardedRoute>
-                            <ProfilePage />
+                            <Layout>
+                                <ProfilePage />
+                            </Layout>
                         </GuardedRoute>
                     }
                 />
-                <Route path="/:username/likes" element={<LikesPage />} />
+                <Route
+                    path="/:username/likes"
+                    element={
+                        <Layout>
+                            <LikesPage />
+                        </Layout>
+                    }
+                />
                 <Route
                     path="/:username/followers"
-                    element={<FollowersPage />}
+                    element={
+                        <Layout>
+                            <FollowersPage />
+                        </Layout>
+                    }
                 />
                 <Route
                     path="/:username/following"
-                    element={<FollowingPage />}
+                    element={
+                        <Layout>
+                            <FollowingPage />
+                        </Layout>
+                    }
                 />
                 <Route
                     path="/:username/status/:tweetId"
-                    element={<TweetRepliesPage />}
+                    element={
+                        <Layout>
+                            <TweetRepliesPage />
+                        </Layout>
+                    }
                 />
-                <Route path="/search" element={<SearchResultsPage />} />
-                <Route path="/search/tweets" element={<TweetSearch />} />
-                <Route path="/:tweetId/likedBy" element={<LikedByPage />} />
+                <Route
+                    path="/search"
+                    element={
+                        <Layout>
+                            <SearchResultsPage />
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/search/tweets"
+                    element={
+                        <Layout>
+                            <TweetSearch />
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/:tweetId/likedBy"
+                    element={
+                        <Layout>
+                            <LikedByPage />
+                        </Layout>
+                    }
+                />
                 <Route
                     path="/:tweetId/retweetedBy"
-                    element={<RetweetedByPage />}
+                    element={
+                        <Layout>
+                            <RetweetedByPage />
+                        </Layout>
+                    }
                 />
+                <Route path="/" element={<IndexRoute />} />
             </Routes>
         </BrowserRouter>
     );

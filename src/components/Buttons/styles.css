@@ -6,15 +6,6 @@
     justify-content: space-around;
 }
 
-.time {
-    padding-left: 0.3em;
-    color: #8899a6;
-}
-.time::before {
-    content: '\00b7';
-    padding-right: 0.3em;
-}
-
 button {
     border: 'none' !important;
     background: 'none' !important;

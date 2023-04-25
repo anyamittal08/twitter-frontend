@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
 import config from '../../config';
-import UserList from '../UserList';
+import UserList from '../UserListA';
 
 const LikedByPage = () => {
     const { tweetId } = useParams();
