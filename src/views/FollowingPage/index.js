@@ -13,7 +13,7 @@ const FollowingPage = () => {
     );
 
     const { data: followingData } = useQuery(
-        'followingData',
+        `${username}Following`,
         () =>
             axios
                 .get(`${config.api}/users/${userData?.id}/following`)

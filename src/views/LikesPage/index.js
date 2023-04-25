@@ -13,7 +13,7 @@ const LikesPage = () => {
     );
 
     const { data: likedTweets } = useQuery(
-        'likedTweets',
+        `${username}Likes`,
         () =>
             axios
                 .get(`${config.api}/users/${userData?.id}/likedTweets`)

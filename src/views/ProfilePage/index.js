@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link as ReactRouterLink } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useContext } from 'react';
 
@@ -138,7 +138,8 @@ function ProfilePage() {
                                 </div>
                                 <div style={{ display: 'flex', gap: '15px' }}>
                                     <Link
-                                        href="#"
+                                        component={ReactRouterLink}
+                                        to={`/${username}/followers`}
                                         variant="body2"
                                         color="#657786"
                                         underline="hover"
@@ -150,7 +151,8 @@ function ProfilePage() {
                                         Followers
                                     </Link>
                                     <Link
-                                        href="#"
+                                        component={ReactRouterLink}
+                                        to={`/${username}/following`}
                                         variant="body2"
                                         color="#657786"
                                         underline="hover"
@@ -198,6 +200,8 @@ function ProfilePage() {
                                     />
                                     <Tab
                                         label="Likes"
+                                        component={ReactRouterLink}
+                                        to={`/${username}/likes`}
                                         sx={{
                                             color: '#657786',
                                             '&:hover': {
