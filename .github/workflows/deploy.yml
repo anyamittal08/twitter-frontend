@@ -33,4 +33,4 @@ jobs:
                   AWS_DEFAULT_REGION: 'us-west-2'
 
             - name: Deploy
-              run: ./deploy
+              run: CI=false ./deploy
