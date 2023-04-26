@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -o errexit
+
+# build
+npm run build
+
+# sync with s3
+aws s3 sync ./build s3://twitter.anyamittal.com/ --delete --exclude *.map
+
+# invalidate cache
+aws cloudfront create-invalidation --distribution-id E15YHAZR68UAY8 --path "/*"
