@@ -39,6 +39,16 @@ const FollowButton = () => (
     </BasicButton>
 );
 
+const LogoutButton = ({ onClick }) => (
+    <BasicButton
+        variant="contained"
+        sx={{ backgroundColor: 'black', padding: '3px 15px 3px 15px' }}
+        onClick={onClick}
+    >
+        <ButtonText>Logout</ButtonText>
+    </BasicButton>
+);
+
 const TweetButton = ({ width, onClick }) => (
     <BasicButton
         variant="contained"
@@ -96,4 +106,5 @@ export {
     MoreOptionsButton,
     TweetButton,
     FollowButton,
+    LogoutButton,
 };

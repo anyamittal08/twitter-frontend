@@ -1,14 +1,8 @@
-import {
-    Avatar,
-    ListItem,
-    ListItemAvatar,
-    ListItemButton,
-    ListItemText,
-} from '@mui/material';
-import { FollowButton } from '../../Buttons';
+import { Avatar, ListItemAvatar, ListItemText } from '@mui/material';
+
 const UserWithoutBio = ({ user }) => {
     return (
-        <ListItem>
+        <>
             <ListItemAvatar>
                 <Avatar />
             </ListItemAvatar>
@@ -16,8 +10,7 @@ const UserWithoutBio = ({ user }) => {
                 primary={user.displayName}
                 secondary={`@${user.username}`}
             />
-            <FollowButton sx={{ float: 'right' }} />
-        </ListItem>
+        </>
     );
 };
 

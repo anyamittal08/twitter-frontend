@@ -1,6 +1,7 @@
 import { Link, List, ListItem, Paper, Typography } from '@mui/material';
 
 import UserWithoutBio from '../User/UserWithoutBio';
+import { FollowButton } from '../Buttons';
 
 const WhoToFollow = ({ users }) => {
     return (
@@ -17,10 +18,16 @@ const WhoToFollow = ({ users }) => {
             <Typography variant="h6">Who to follow</Typography>
             <List>
                 {users?.map((user) => (
-                    <UserWithoutBio
-                        user={user}
-                        style={{ '&:hover': { backgroundColor: 'lightGrey' } }}
-                    />
+                    <ListItem>
+                        <UserWithoutBio
+                            user={user}
+                            style={{
+                                '&:hover': { backgroundColor: 'lightGrey' },
+                            }}
+                            action={'Follow'}
+                        />
+                        <FollowButton />
+                    </ListItem>
                 ))}
                 <ListItem
                     sx={{

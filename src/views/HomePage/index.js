@@ -15,13 +15,11 @@ import {
 import config from '../../config';
 import { UserContext } from '../../contexts/auth';
 import Tweet from '../../components/Tweet';
-import LogoutBtn from '../../components/LogoutBtn';
 import { TweetButton } from '../../components/Buttons';
 
 function HomePage() {
     const auth = useContext(UserContext);
     const [newTweet, setNewTweet] = useState('');
-    const [searchQuery, setQuery] = useState('');
 
     const navigate = useNavigate();
 
@@ -47,31 +45,11 @@ function HomePage() {
         setNewTweet('');
     });
 
-    async function fetchSearchResults(e) {
-        e.preventDefault();
-        await axios
-            .get(`${config.api}/tweets/search/${searchQuery}`)
-            .then((res) => console.log(res.data));
-        navigate(`/search?q=${searchQuery}`);
-    }
-
-    const storeRecentSearchHistory = (searchQuery) => {
-        localStorage.getItem('searchHistory')
-            ? localStorage.getItem('searchHistory').append(searchQuery)
-            : localStorage.setItem(
-                  'searchHistory',
-                  JSON.stringify([searchQuery])
-              );
-
-        console.log(localStorage.getItem('searchHistory'));
-    };
-
     if (isLoading) return <div>loading...</div>;
     if (error) return <div>error!!</div>;
 
     const postTweet = (e) => {
         e.preventDefault();
-        console.log('here');
         mutate({ content: newTweet });
     };
 
@@ -123,11 +101,7 @@ function HomePage() {
                 </ListItem>
                 <Divider />
                 {tweets.data.map((tweet) => (
-                    <Tweet
-                        tweet={tweet}
-                        key={tweet._id}
-                        retweeters={tweet.retweetingFollows}
-                    />
+                    <Tweet tweet={tweet} key={tweet._id} />
                 ))}
             </List>
             <Divider orientation="vertical" flexItem />

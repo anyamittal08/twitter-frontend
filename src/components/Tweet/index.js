@@ -3,6 +3,7 @@ import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 
 import { ListItemAvatar, Avatar, Link, Divider } from '@mui/material';
+import { styled } from '@mui/system';
 
 import config from '../../config';
 import { UserContext } from '../../contexts/auth';
@@ -16,7 +17,20 @@ import {
 } from '../Buttons';
 import { Message, Author, Retweeters, Time } from '../TweetComponents';
 
-import './styles.css';
+const TweetContainer = styled('div')({
+    minHeight: '68px',
+    padding: '10px',
+    display: 'flex',
+    flexDirection: 'column',
+    fontFamily: 'Helvetica',
+    fontSize: '14px',
+    lineHeight: '18px',
+    paddingBottom: '0px',
+    cursor: 'pointer',
+    '&:hover': {
+        backgroundColor: '#F5F8FA',
+    },
+});
 
 function Tweet({ tweet, displayName }) {
     const auth = useContext(UserContext);
@@ -61,9 +75,9 @@ function Tweet({ tweet, displayName }) {
 
     const likeAndUnlikeTweet = async (e) => {
         e.preventDefault();
+        e.stopPropagation();
         if (!tweet.liked) {
             sendLike();
-            console.log('liked');
         } else if (tweet.liked) {
             sendUnlike();
         }
@@ -107,6 +121,7 @@ function Tweet({ tweet, displayName }) {
 
     const retweetAndUndo = async (e) => {
         e.preventDefault();
+        e.stopPropagation();
         if (!tweet.retweeted) {
             sendRetweet();
         } else if (tweet.retweeted) {
@@ -116,37 +131,90 @@ function Tweet({ tweet, displayName }) {
 
     return (
         <div>
-            <div className="tweet-container" style={{ paddingBottom: '0px' }}>
+            <TweetContainer
+                onClick={() =>
+                    navigate(`/${tweet.author.username}/status/${tweet._id}`)
+                }
+            >
                 <Retweeters
                     retweeters={tweet.followedRetweeters}
                     retweetedByUser={tweet.retweetedByUser}
                     displayName={displayName}
                 />
-                <div className="tweet">
-                    <Avatar className="avatar" alt="profile-pic" />
-
-                    <div className="content">
-                        <Author author={tweet.author} />
-                        <Time timestamp={tweet.createdAt} />
-                        <Message content={tweet.content} />
+                <div
+                    style={{
+                        display: 'flex',
+                    }}
+                >
+                    <div
+                        style={{
+                            marginRight: '10px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Avatar
+                            className="avatar"
+                            alt="profile-pic"
+                            sx={{ marginRight: '0px' }}
+                        />
+                        <>
+                            {tweet.isThread ? (
+                                tweet.nextTweetInThreadId ? (
+                                    <div
+                                        className="threadLine"
+                                        style={{
+                                            width: '2px',
+                                            backgroundColor: '#AAB8C2',
+                                            height: '100%',
+                                            marginTop: '2px',
+                                        }}
+                                    />
+                                ) : null
+                            ) : null}
+                        </>
+                    </div>
+                    <div style={{ width: '100%' }}>
+                        <div className="content">
+                            <Author author={tweet.author} />
+                            <Time timestamp={tweet.createdAt} />
+                            <Message content={tweet.content} />
+                        </div>
+                        <div
+                            className="buttons"
+                            style={{
+                                width: '80%',
+                                marginTop: '0px',
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <ReplyButton replyCount={tweet.replyCount} />
+                            <RetweetButton
+                                onClick={retweetAndUndo}
+                                retweetCount={tweet.retweetCount}
+                                retweeted={tweet.retweeted}
+                            />
+                            <LikeButton
+                                onClick={likeAndUnlikeTweet}
+                                likeCount={tweet.likeCount}
+                                liked={tweet.liked}
+                            />
+                            <MoreOptionsButton />
+                        </div>
                     </div>
                 </div>
-                <div className="buttons" style={{ marginTop: '0px' }}>
-                    <ReplyButton replyCount={tweet.replyCount} />
-                    <RetweetButton
-                        onClick={retweetAndUndo}
-                        retweetCount={tweet.retweetCount}
-                        retweeted={tweet.retweeted}
-                    />
-                    <LikeButton
-                        onClick={likeAndUnlikeTweet}
-                        likeCount={tweet.likeCount}
-                        liked={tweet.liked}
-                    />
-                    <MoreOptionsButton />
-                </div>
-            </div>
-            <Divider />
+            </TweetContainer>
+            <>
+                {tweet.isThread ? (
+                    tweet.nextTweetInThreadId ? null : (
+                        <Divider />
+                    )
+                ) : (
+                    <Divider />
+                )}
+            </>
         </div>
     );
 }

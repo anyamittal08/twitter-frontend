@@ -1,12 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { useContext, useState } from 'react';
 
 import {
+    Avatar,
     Drawer,
     List,
     ListItem,
     ListItemText,
+    ListItemAvatar,
     Typography,
+    Box,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import HomeIcon from '@mui/icons-material/Home';
@@ -17,9 +21,17 @@ import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import Person2Icon from '@mui/icons-material/Person2';
 import TwitterIcon from '@mui/icons-material/Twitter';
 
-import { TweetButton } from '../Buttons';
+import { UserContext } from '../../contexts/auth';
+
+import { TweetButton, LogoutButton } from '../Buttons';
+import UserWithoutBio from '../User/UserWithoutBio';
 
 const SideNavbar = () => {
+    const auth = useContext(UserContext);
+    const loggedInUser = auth.user;
+
+    const [anchorEl, setAnchorEl] = useState(null);
+
     const DrawerContainer = styled('div')({
         overflow: 'auto',
     });
@@ -49,11 +61,22 @@ const SideNavbar = () => {
         fontSize: '1.2em',
     }));
 
+    const handleLogout = () => {
+        console.log('signed out');
+    };
+
     return (
         <DrawerPaper variant="permanent">
-            <DrawerContainer sx={{ overflow: 'auto' }}>
+            <DrawerContainer
+                sx={{
+                    overflow: 'auto',
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                }}
+            >
                 {/* <Router> */}
-                <List>
+                <List sx={{ flexGrow: 1 }}>
                     <ListItemButton
                         p={2}
                         sx={{
@@ -109,7 +132,27 @@ const SideNavbar = () => {
                     >
                         <TweetButton width="250px" />
                     </ListItem>
+                    {/* <ListItem
+                        sx={{
+                            marginTop: 'auto',
+                        }}
+                    >
+                        <UserWithoutBio
+                            sx={{ margin: '10px 60px' }}
+                            user={loggedInUser}
+                        />
+                        <LogoutButton />
+                    </ListItem> */}
                 </List>
+                <Box sx={{ marginTop: 'auto' }}>
+                    <ListItem>
+                        <UserWithoutBio
+                            sx={{ margin: '10px 60px' }}
+                            user={loggedInUser}
+                        />
+                        <LogoutButton onClick={handleLogout} />
+                    </ListItem>
+                </Box>
                 {/* </Router> */}
             </DrawerContainer>
         </DrawerPaper>

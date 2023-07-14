@@ -100,6 +100,7 @@ function ProfilePage() {
                             >
                                 <FollowButton
                                     style={{ alignSelf: 'flex-end' }}
+                                    actionText={'Follow'}
                                 />
                             </div>
                         </div>

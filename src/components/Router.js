@@ -91,9 +91,11 @@ function Router() {
                 <Route
                     path="/:username/status/:tweetId"
                     element={
-                        <Layout>
-                            <TweetRepliesPage />
-                        </Layout>
+                        <GuardedRoute>
+                            <Layout>
+                                <TweetRepliesPage />
+                            </Layout>
+                        </GuardedRoute>
                     }
                 />
                 <Route

@@ -18,6 +18,7 @@ const Author = ({ author }) => {
             <Link
                 component={ReactRouterLink}
                 to={`/${author.displayName}`}
+                onClick={(e) => e.stopPropagation()}
                 underline="hover"
                 color="black"
                 sx={{ fontWeight: 'bold', cursor: 'pointer' }}
@@ -40,21 +41,24 @@ const Retweeters = ({ retweeters, retweetedByUser, displayName }) => (
                     icon={faRetweet}
                     style={{ color: '#657786' }}
                 />{' '}
-                <Link
-                    component={ReactRouterLink}
-                    to={`/${displayName}`}
-                    className="retweeters"
-                    underline="hover"
-                    sx={{
-                        cursor: 'pointer',
-                        color: '#657786',
-                        fontWeight: 'bold',
-                        paddingBottom: '0px',
-                    }}
-                >
-                    {' '}
-                    {displayName} Retweeted{' '}
-                </Link>
+                <span>
+                    <Link
+                        component={ReactRouterLink}
+                        to={`/${displayName}`}
+                        className="retweeters"
+                        underline="hover"
+                        sx={{
+                            cursor: 'pointer',
+                            color: '#657786',
+                            fontWeight: 'bold',
+                            paddingBottom: '0px',
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {' '}
+                        {displayName} Retweeted{' '}
+                    </Link>
+                </span>
             </>
         ) : retweeters?.length > 0 ? (
             <>

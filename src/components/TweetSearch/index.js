@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import config from '../../config';
+import TweetList from '../TweetList';
 
 const TweetSearch = () => {
     const queryParams = new URLSearchParams(window.location.search);
@@ -26,14 +27,21 @@ const TweetSearch = () => {
     }
 
     return (
-        <div>
-            <div>Search Results:</div>
-            {searchResults.map((tweet) => (
-                <>
-                    <br />
-                    <div key={tweet.id}>{JSON.stringify(tweet)}</div>
-                </>
-            ))}
+        <div className="container">
+            <div
+                style={{
+                    padding: '0px 20px',
+                    position: 'sticky',
+                    top: '0',
+                    zIndex: '999',
+                    background: 'rgba(255, 255, 255, 0.9)',
+                }}
+            >
+                <h2 style={{ margin: '0px' }}>Search Results</h2>
+            </div>
+            <div>
+                <TweetList tweets={searchResults} />
+            </div>
         </div>
     );
 };
