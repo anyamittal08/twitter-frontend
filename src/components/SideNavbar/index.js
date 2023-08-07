@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import {
     Avatar,
@@ -29,8 +30,9 @@ import UserWithoutBio from '../User/UserWithoutBio';
 const SideNavbar = () => {
     const auth = useContext(UserContext);
     const loggedInUser = auth.user;
+    const navigate = useNavigate();
 
-    const [anchorEl, setAnchorEl] = useState(null);
+    // const [anchorEl, setAnchorEl] = useState(null);
 
     const DrawerContainer = styled('div')({
         overflow: 'auto',
@@ -61,8 +63,10 @@ const SideNavbar = () => {
         fontSize: '1.2em',
     }));
 
-    const handleLogout = () => {
-        console.log('signed out');
+    const handleLogout = (e) => {
+        e.preventDefault();
+        localStorage.removeItem('auth');
+        navigate('/');
     };
 
     return (

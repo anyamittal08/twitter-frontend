@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
-import { Box } from '@mui/material';
 
 import theme from './theme';
 import Router from './components/Router';
