@@ -9,10 +9,22 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 
 import config from '../../config';
+import SignUpForm from '../SignupForm';
 
 function LoginPage({ setAuthenticatedUser }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = (e) => {
+        e.preventDefault();
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
 
     const { mutate, isSuccess, data } = useMutation(
         async ({ email, password }) => {
@@ -40,7 +52,7 @@ function LoginPage({ setAuthenticatedUser }) {
     const renderLoginForm = () => {
         return (
             <Paper height="100%" sx={{ padding: '2em 6em' }}>
-                <form onSubmit={onLogin}>
+                <form>
                     <Grid container direction="column" alignItems="center">
                         <Typography
                             variant="h4"
@@ -75,9 +87,24 @@ function LoginPage({ setAuthenticatedUser }) {
                             fullWidth
                             disableElevation
                             sx={{ margin: '2em 0em', bgcolor: '#000' }}
+                            onClick={onLogin}
                         >
                             <Typography color="white">Login</Typography>
                         </Button>
+                        <Button
+                            variant="contained"
+                            type="submit"
+                            size="large"
+                            fullWidth
+                            disableElevation
+                            onClick={openModal}
+                            sx={{ bgcolor: '#000' }}
+                        >
+                            <Typography color="white">
+                                Create account
+                            </Typography>
+                        </Button>
+                        <SignUpForm open={isModalOpen} onClose={closeModal} />
                     </Grid>
                 </form>
             </Paper>
