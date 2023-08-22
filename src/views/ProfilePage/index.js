@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 import { useParams, Link as ReactRouterLink } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useContext } from 'react';
@@ -19,6 +20,7 @@ function ProfilePage() {
 
     const { data: userData } = useQuery(`${username}Data`, () =>
         axios.get(`${config.api}/users/${username}`).then((res) => {
+            console.log(res.data);
             return res.data;
         })
     );
@@ -30,7 +32,9 @@ function ProfilePage() {
                 .get(`${config.api}/users/${userData?.id}/tweets`, {
                     headers: { authorization: `Bearer ${auth.token}` },
                 })
-                .then((res) => res.data.map((tweet) => tweet)),
+                .then((res) => {
+                    return res.data.map((tweet) => tweet);
+                }),
         {
             enabled: !!userData?.id,
         }
@@ -54,10 +58,9 @@ function ProfilePage() {
                             margin: '0px',
                             color: '#657786',
                             fontSize: '0.9em',
-                            border: '1px solid red',
                         }}
                     >
-                        tweets
+                        {`${tweets?.length} posts`}
                     </p>
                 </div>
                 <div className="profileHeader">
@@ -128,13 +131,14 @@ function ProfilePage() {
                                         marginTop: '10px',
                                         marginBottom: '10px',
                                         gap: '5px',
-                                        border: '1px solid red',
                                     }}
                                 >
                                     <CalendarMonthIcon />
                                     <Typography>
                                         {' '}
-                                        {`Joined ${userData?.createdAt}`}
+                                        {`Joined ${moment(
+                                            userData?.createdAt
+                                        ).format('MMMM YYYY')}`}
                                     </Typography>
                                 </div>
                                 <div style={{ display: 'flex', gap: '15px' }}>
@@ -149,7 +153,7 @@ function ProfilePage() {
                                             fontWeight: 'medium',
                                         }}
                                     >
-                                        Followers
+                                        {`${userData?.followerCount} followers`}
                                     </Link>
                                     <Link
                                         component={ReactRouterLink}
@@ -162,7 +166,7 @@ function ProfilePage() {
                                             fontWeight: 'medium',
                                         }}
                                     >
-                                        Following
+                                        {`${userData?.followingCount} following`}
                                     </Link>
                                 </div>
                                 <div

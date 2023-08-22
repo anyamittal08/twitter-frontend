@@ -11,10 +11,12 @@ import config from '../../config';
 function SignUpForm({ open, onClose }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [username, setUsername] = useState('');
     const [displayName, setDisplayName] = useState('');
+    const [passwordError, setPasswordError] = useState('');
 
     const {
         mutate: signUp,
@@ -65,6 +67,12 @@ function SignUpForm({ open, onClose }) {
 
     const onSignUp = (e) => {
         e.preventDefault();
+        if (password !== confirmPassword) {
+            setPasswordError('Passwords do not match');
+            return;
+        } else {
+            setPasswordError('');
+        }
         try {
             signUp({
                 email,
@@ -102,30 +110,35 @@ function SignUpForm({ open, onClose }) {
                 </Typography>
                 <form onSubmit={onSignUp}>
                     <TextField
+                        required
                         label="First Name"
                         fullWidth
                         margin="normal"
                         onChange={(e) => setFirstName(e.target.value)}
                     />
                     <TextField
+                        required
                         label="Last Name"
                         fullWidth
                         margin="normal"
                         onChange={(e) => setLastName(e.target.value)}
                     />
                     <TextField
+                        required
                         label="Username"
                         fullWidth
                         margin="normal"
                         onChange={(e) => setUsername(e.target.value)}
                     />
                     <TextField
+                        required
                         label="Display Name"
                         fullWidth
                         margin="normal"
                         onChange={(e) => setDisplayName(e.target.value)}
                     />
                     <TextField
+                        required
                         label="Email"
                         fullWidth
                         margin="normal"
@@ -133,6 +146,7 @@ function SignUpForm({ open, onClose }) {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <TextField
+                        required
                         label="Password"
                         fullWidth
                         margin="normal"
@@ -140,10 +154,17 @@ function SignUpForm({ open, onClose }) {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <TextField
+                        required
                         label="Confirm Password"
                         fullWidth
+                        error={!!passwordError}
+                        helperText={passwordError}
                         margin="normal"
                         type="password"
+                        onChange={(e) => {
+                            setConfirmPassword(e.target.value);
+                            setPasswordError('');
+                        }}
                     />
                     <Button
                         variant="contained"
