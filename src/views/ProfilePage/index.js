@@ -160,7 +160,6 @@ function ProfilePage() {
                             <div
                                 style={{
                                     margin: '10px 15px',
-                                    border: '1px solid red',
                                 }}
                             >
                                 {relationship?.userIsFollowed ? (
