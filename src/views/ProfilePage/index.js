@@ -149,7 +149,6 @@ function ProfilePage() {
                                         color="#657786"
                                         underline="hover"
                                         sx={{
-                                            border: '1px solid red',
                                             fontWeight: 'medium',
                                         }}
                                     >
@@ -162,7 +161,6 @@ function ProfilePage() {
                                         color="#657786"
                                         underline="hover"
                                         sx={{
-                                            border: '1px solid red',
                                             fontWeight: 'medium',
                                         }}
                                     >
