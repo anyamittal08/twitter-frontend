@@ -57,7 +57,6 @@ function ProfilePage() {
 
     const { mutate: followUser } = useMutation(
         async () => {
-            console.log('here');
             await axios.post(
                 `${config.api}/users/${userData?.id}/follow`,
                 {},
