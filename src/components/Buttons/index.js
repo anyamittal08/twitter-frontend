@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faHeart as faHeartOutline,
@@ -30,14 +31,35 @@ const BasicButton = styled(Button)(() => ({
     },
 }));
 
-const FollowButton = () => (
+const FollowButton = ({ onClick }) => (
     <BasicButton
         variant="contained"
         sx={{ backgroundColor: 'black', padding: '3px 15px 3px 15px' }}
+        onClick={onClick}
     >
         <ButtonText>Follow</ButtonText>
     </BasicButton>
 );
+
+const FollowingButton = ({ onClick }) => {
+    const [isHovered, setIsHovered] = useState(false);
+
+    return (
+        <BasicButton
+            variant={isHovered ? 'contained' : 'outlined'}
+            sx={{
+                // backgroundColor: isHovered ? 'red' : '',
+                padding: '3px 15px 3px 15px',
+                color: isHovered ? 'red' : 'black',
+            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onClick={onClick}
+        >
+            {isHovered ? 'Unfollow' : 'Following'}
+        </BasicButton>
+    );
+};
 
 const LogoutButton = ({ onClick }) => (
     <BasicButton
@@ -106,5 +128,6 @@ export {
     MoreOptionsButton,
     TweetButton,
     FollowButton,
+    FollowingButton,
     LogoutButton,
 };

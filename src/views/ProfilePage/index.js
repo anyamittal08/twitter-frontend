@@ -1,7 +1,7 @@
 import axios from 'axios';
 import moment from 'moment';
 import { useParams, Link as ReactRouterLink } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation, queryClient } from 'react-query';
 import { useContext } from 'react';
 
 import { Avatar, Box, Divider, Link, Tab, Typography } from '@mui/material';
@@ -12,7 +12,7 @@ import { UserContext } from '../../contexts/auth';
 
 import TweetList from '../../components/TweetList';
 
-import { FollowButton } from '../../components/Buttons';
+import { FollowButton, FollowingButton } from '../../components/Buttons';
 
 function ProfilePage() {
     const auth = useContext(UserContext);
@@ -20,7 +20,6 @@ function ProfilePage() {
 
     const { data: userData } = useQuery(`${username}Data`, () =>
         axios.get(`${config.api}/users/${username}`).then((res) => {
-            console.log(res.data);
             return res.data;
         })
     );
@@ -39,6 +38,66 @@ function ProfilePage() {
             enabled: !!userData?.id,
         }
     );
+
+    const { data: relationship } = useQuery(
+        `${username}Relationship`,
+        () =>
+            axios
+                .get(`${config.api}/users/${userData?.id}/relationship`, {
+                    headers: { authorization: `Bearer ${auth.token}` },
+                })
+                .then((res) => {
+                    return res.data;
+                }),
+        {
+            enabled: !!userData?.id,
+        }
+    );
+
+    const { mutate: followUser } = useMutation(
+        async () => {
+            console.log('here');
+            await axios.post(
+                `${config.api}/users/${userData?.id}/follow`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${auth.token}`,
+                    },
+                }
+            );
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries({
+                    queryKey: [`${username}Relationship`],
+                });
+            },
+        }
+    );
+
+    const { mutate: unfollowUser } = useMutation(
+        async () => {
+            await axios.delete(`${config.api}/users/${userData?.id}/unfollow`, {
+                headers: {
+                    Authorization: `Bearer ${auth.token}`,
+                },
+            });
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries({
+                    queryKey: [`${username}Relationship`],
+                });
+            },
+        }
+    );
+
+    const handleRelationshipChange = (e) => {
+        e.preventDefault();
+        if (relationship?.userIsFollowed) unfollowUser();
+        else followUser();
+    };
 
     return (
         <>
@@ -101,10 +160,17 @@ function ProfilePage() {
                                     border: '1px solid red',
                                 }}
                             >
-                                <FollowButton
-                                    style={{ alignSelf: 'flex-end' }}
-                                    actionText={'Follow'}
-                                />
+                                {relationship?.userIsFollowed ? (
+                                    <FollowingButton
+                                        style={{ alignSelf: 'flex-end' }}
+                                        onClick={handleRelationshipChange}
+                                    />
+                                ) : (
+                                    <FollowButton
+                                        style={{ alignSelf: 'flex-end' }}
+                                        onClick={handleRelationshipChange}
+                                    />
+                                )}
                             </div>
                         </div>
                         <div
@@ -124,7 +190,34 @@ function ProfilePage() {
                             <div
                                 style={{ color: '#657786', margin: '0px 10px' }}
                             >
-                                <Typography>{`@${userData?.username}`}</Typography>
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <Typography>{`@${userData?.username}`}</Typography>
+                                    {relationship?.userIsFollower ? (
+                                        <div
+                                            style={{
+                                                backgroundColor: '#E1E8ED',
+                                                marginLeft: '5px',
+                                                padding: '0px 5px',
+                                                borderRadius: '5px',
+                                                lineHeight: '1',
+                                            }}
+                                        >
+                                            <Typography
+                                                variant="caption"
+                                                sx={{ fontSize: '10px' }}
+                                            >
+                                                Follows You
+                                            </Typography>
+                                        </div>
+                                    ) : (
+                                        ''
+                                    )}
+                                </div>
                                 <div
                                     style={{
                                         display: 'flex',
