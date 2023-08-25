@@ -1,7 +1,7 @@
 import axios from 'axios';
 import moment from 'moment';
 import { useParams, Link as ReactRouterLink } from 'react-router-dom';
-import { useQuery, useMutation, queryClient } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { useContext } from 'react';
 
 import { Avatar, Box, Divider, Link, Tab, Typography } from '@mui/material';
@@ -17,8 +17,9 @@ import { FollowButton, FollowingButton } from '../../components/Buttons';
 function ProfilePage() {
     const auth = useContext(UserContext);
     const { username } = useParams();
+    const queryClient = useQueryClient();
 
-    const { data: userData } = useQuery(`${username}Data`, () =>
+    const { data: userData } = useQuery(`userData`, () =>
         axios.get(`${config.api}/users/${username}`).then((res) => {
             return res.data;
         })
@@ -40,7 +41,7 @@ function ProfilePage() {
     );
 
     const { data: relationship } = useQuery(
-        `${username}Relationship`,
+        `relationship`,
         () =>
             axios
                 .get(`${config.api}/users/${userData?.id}/relationship`, {
@@ -70,8 +71,9 @@ function ProfilePage() {
         {
             onSuccess: () => {
                 queryClient.invalidateQueries({
-                    queryKey: [`${username}Relationship`],
+                    queryKey: [`relationship`],
                 });
+                queryClient.invalidateQueries({ queryKey: ['userData'] });
             },
         }
     );
@@ -87,8 +89,9 @@ function ProfilePage() {
         {
             onSuccess: () => {
                 queryClient.invalidateQueries({
-                    queryKey: [`${username}Relationship`],
+                    queryKey: [`relationship`],
                 });
+                queryClient.invalidateQueries({ queryKey: ['userData'] });
             },
         }
     );
