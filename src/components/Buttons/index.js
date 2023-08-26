@@ -61,6 +61,20 @@ const FollowingButton = ({ onClick }) => {
     );
 };
 
+const EditProfileButton = ({ onClick }) => {
+    return (
+        <BasicButton
+            variant="outlined"
+            sx={{
+                padding: '3px 15px 3px 15px',
+            }}
+            onClick={onClick}
+        >
+            Edit Profile
+        </BasicButton>
+    );
+};
+
 const LogoutButton = ({ onClick }) => (
     <BasicButton
         variant="contained"
@@ -130,4 +144,5 @@ export {
     FollowButton,
     FollowingButton,
     LogoutButton,
+    EditProfileButton,
 };

@@ -12,9 +12,14 @@ import { UserContext } from '../../contexts/auth';
 
 import TweetList from '../../components/TweetList';
 
-import { FollowButton, FollowingButton } from '../../components/Buttons';
+import {
+    EditProfileButton,
+    FollowButton,
+    FollowingButton,
+} from '../../components/Buttons';
 
 function ProfilePage() {
+    const authenticatedUser = JSON.parse(localStorage.getItem('auth')).user;
     const auth = useContext(UserContext);
     const { username } = useParams();
     const queryClient = useQueryClient();
@@ -161,7 +166,9 @@ function ProfilePage() {
                                     margin: '10px 15px',
                                 }}
                             >
-                                {relationship?.userIsFollowed ? (
+                                {authenticatedUser.id === userData?.id ? (
+                                    <EditProfileButton />
+                                ) : relationship?.userIsFollowed ? (
                                     <FollowingButton
                                         style={{ alignSelf: 'flex-end' }}
                                         onClick={handleRelationshipChange}
