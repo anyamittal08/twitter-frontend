@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+
 import axios from 'axios';
 
 import { TextField, styled } from '@mui/material';
 import { Drawer } from '@mui/material';
 
-import UserListB from '../WhoToFollow';
-import { useNavigate } from 'react-router-dom';
-
 import config from '../../config';
+import { UserContext } from '../../contexts/auth';
+import WhoToFollow from '../WhoToFollow';
 
 const DrawerContainer = styled('div')({
     paddingTop: '5px',
@@ -31,23 +33,33 @@ const Searchbar = styled(TextField)(({ theme }) => ({
 }));
 
 const SidebarRight = () => {
+    const auth = useContext(UserContext);
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
 
-    const users = [
-        {
-            displayName: 'Anya M',
-            username: 'anyamittal',
-        },
-        {
-            displayName: 'Anya M',
-            username: 'anyamittal',
-        },
-        {
-            displayName: 'Anya M',
-            username: 'anyamittal',
-        },
-    ];
+    // const users = [
+    //     {
+    //         displayName: 'Anya M',
+    //         username: 'anyamittal',
+    //     },
+    //     {
+    //         displayName: 'Anya M',
+    //         username: 'anyamittal',
+    //     },
+    //     {
+    //         displayName: 'Anya M',
+    //         username: 'anyamittal',
+    //     },
+    // ];
+
+    const { data: suggestedUsers } = useQuery('suggestedUsers', async () => {
+        const res = await axios.get(`${config.api}/users/suggested/users`, {
+            headers: { authorization: `Bearer ${auth.token}` },
+        });
+        return res.data;
+    });
+
+    console.log(suggestedUsers);
 
     // const { mutate } = useMutation(async (body) => {
     //     await axios.post(`${config.api}/tweets/post`, body, {
@@ -103,7 +115,7 @@ const SidebarRight = () => {
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </form>
-                <UserListB users={users} />
+                <WhoToFollow users={suggestedUsers ? suggestedUsers : []} />
             </DrawerContainer>
         </DrawerPaper>
     );

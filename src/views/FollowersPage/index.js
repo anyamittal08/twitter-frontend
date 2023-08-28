@@ -14,16 +14,21 @@ const FollowersPage = () => {
 
     const { data: followerData } = useQuery(
         `${username}Followers`,
-        () =>
-            axios
-                .get(`${config.api}/users/${userData?.id}/followers`)
-                .then((res) =>
-                    res.data.map((relationship) => relationship.follower)
-                ),
+        async () => {
+            const response = await axios.get(
+                `${config.api}/users/${userData?.id}/followers`
+            );
+            const responseArr = response.data.map(
+                (relationship) => relationship.follower
+            );
+            return responseArr;
+        },
         {
             enabled: !!userData?.id,
         }
     );
+
+    console.log(followerData);
 
     return <UserList usersArr={followerData} />;
 };
