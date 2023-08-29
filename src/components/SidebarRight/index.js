@@ -59,8 +59,6 @@ const SidebarRight = () => {
         return res.data;
     });
 
-    console.log(suggestedUsers);
-
     // const { mutate } = useMutation(async (body) => {
     //     await axios.post(`${config.api}/tweets/post`, body, {
     //         headers: {

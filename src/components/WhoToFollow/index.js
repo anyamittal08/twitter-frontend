@@ -4,7 +4,6 @@ import UserWithoutBio from '../User/UserWithoutBio';
 import { FollowButton } from '../Buttons';
 
 const WhoToFollow = ({ users }) => {
-    console.log(users);
     return (
         <Paper
             elevation={0}

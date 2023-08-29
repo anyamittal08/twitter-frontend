@@ -17,18 +17,18 @@ const Author = ({ author }) => {
         <span className="author">
             <Link
                 component={ReactRouterLink}
-                to={`/${author.displayName}`}
+                to={`/${author?.displayName}`}
                 onClick={(e) => e.stopPropagation()}
                 underline="hover"
                 color="black"
                 sx={{ fontWeight: 'bold', cursor: 'pointer' }}
             >
-                {author.displayName}
+                {author?.displayName}
             </Link>
             <span
                 className="handle"
                 style={{ paddingLeft: '8px' }}
-            >{`@${author.username}`}</span>
+            >{`@${author?.username}`}</span>
         </span>
     );
 };

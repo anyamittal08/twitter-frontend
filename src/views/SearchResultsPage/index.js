@@ -13,11 +13,12 @@ const SearchResultsPage = () => {
         isError,
         data: userSearchResults,
         error,
-    } = useQuery('userSearch', () =>
-        axios
-            .get(`${config.api}/users/search/${searchQuery}`)
-            .then((res) => res.data)
-    );
+    } = useQuery('userSearch', async () => {
+        const res = await axios.get(
+            `${config.api}/users/search/${searchQuery}`
+        );
+        return res.data;
+    });
 
     if (isLoading) return <span>Loading...</span>;
     if (isError) return <span>{error.message}</span>;

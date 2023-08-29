@@ -33,6 +33,7 @@ const TweetContainer = styled('div')({
 });
 
 function Tweet({ tweet, displayName }) {
+    console.log(tweet);
     const auth = useContext(UserContext);
     const queryClient = useQueryClient();
     const navigate = useNavigate();
@@ -137,9 +138,9 @@ function Tweet({ tweet, displayName }) {
                 }
             >
                 <Retweeters
-                    retweeters={tweet.followedRetweeters}
-                    retweetedByUser={tweet.retweetedByUser}
-                    displayName={displayName}
+                    retweeters={tweet?.followedRetweeters}
+                    retweetedByUser={tweet?.retweetedByUser}
+                    // displayName={displayName}
                 />
                 <div
                     style={{
@@ -160,7 +161,7 @@ function Tweet({ tweet, displayName }) {
                             sx={{ marginRight: '0px' }}
                         />
                         <>
-                            {tweet.isThread ? (
+                            {tweet?.isThread ? (
                                 tweet.nextTweetInThreadId ? (
                                     <div
                                         className="threadLine"
@@ -177,9 +178,9 @@ function Tweet({ tweet, displayName }) {
                     </div>
                     <div style={{ width: '100%' }}>
                         <div className="content">
-                            <Author author={tweet.author} />
-                            <Time timestamp={tweet.createdAt} />
-                            <Message content={tweet.content} />
+                            <Author author={tweet?.author} />
+                            <Time timestamp={tweet?.createdAt} />
+                            <Message content={tweet?.content} />
                         </div>
                         <div
                             className="buttons"
@@ -190,16 +191,16 @@ function Tweet({ tweet, displayName }) {
                                 justifyContent: 'space-between',
                             }}
                         >
-                            <ReplyButton replyCount={tweet.replyCount} />
+                            <ReplyButton replyCount={tweet?.replyCount} />
                             <RetweetButton
                                 onClick={retweetAndUndo}
-                                retweetCount={tweet.retweetCount}
-                                retweeted={tweet.retweeted}
+                                retweetCount={tweet?.retweetCount}
+                                retweeted={tweet?.retweeted}
                             />
                             <LikeButton
                                 onClick={likeAndUnlikeTweet}
-                                likeCount={tweet.likeCount}
-                                liked={tweet.liked}
+                                likeCount={tweet?.likeCount}
+                                liked={tweet?.liked}
                             />
                             <MoreOptionsButton />
                         </div>
@@ -207,7 +208,7 @@ function Tweet({ tweet, displayName }) {
                 </div>
             </TweetContainer>
             <>
-                {tweet.isThread ? (
+                {tweet?.isThread ? (
                     tweet.nextTweetInThreadId ? null : (
                         <Divider />
                     )

@@ -67,25 +67,31 @@ function Router() {
                 <Route
                     path="/:username/likes"
                     element={
-                        <Layout>
-                            <LikesPage />
-                        </Layout>
+                        <GuardedRoute>
+                            <Layout>
+                                <LikesPage />
+                            </Layout>
+                        </GuardedRoute>
                     }
                 />
                 <Route
                     path="/:username/followers"
                     element={
-                        <Layout>
-                            <FollowersPage />
-                        </Layout>
+                        <GuardedRoute>
+                            <Layout>
+                                <FollowersPage />
+                            </Layout>
+                        </GuardedRoute>
                     }
                 />
                 <Route
                     path="/:username/following"
                     element={
-                        <Layout>
-                            <FollowingPage />
-                        </Layout>
+                        <GuardedRoute>
+                            <Layout>
+                                <FollowingPage />
+                            </Layout>
+                        </GuardedRoute>
                     }
                 />
                 <Route
@@ -101,33 +107,41 @@ function Router() {
                 <Route
                     path="/search"
                     element={
-                        <Layout>
-                            <SearchResultsPage />
-                        </Layout>
+                        <GuardedRoute>
+                            <Layout>
+                                <SearchResultsPage />
+                            </Layout>
+                        </GuardedRoute>
                     }
                 />
                 <Route
                     path="/search/tweets"
                     element={
-                        <Layout>
-                            <TweetSearch />
-                        </Layout>
+                        <GuardedRoute>
+                            <Layout>
+                                <TweetSearch />
+                            </Layout>
+                        </GuardedRoute>
                     }
                 />
                 <Route
                     path="/:tweetId/likedBy"
                     element={
-                        <Layout>
-                            <LikedByPage />
-                        </Layout>
+                        <GuardedRoute>
+                            <Layout>
+                                <LikedByPage />
+                            </Layout>
+                        </GuardedRoute>
                     }
                 />
                 <Route
                     path="/:tweetId/retweetedBy"
                     element={
-                        <Layout>
-                            <RetweetedByPage />
-                        </Layout>
+                        <GuardedRoute>
+                            <Layout>
+                                <RetweetedByPage />
+                            </Layout>
+                        </GuardedRoute>
                     }
                 />
                 <Route path="/" element={<IndexRoute />} />
