@@ -37,38 +37,12 @@ const SidebarRight = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
 
-    // const users = [
-    //     {
-    //         displayName: 'Anya M',
-    //         username: 'anyamittal',
-    //     },
-    //     {
-    //         displayName: 'Anya M',
-    //         username: 'anyamittal',
-    //     },
-    //     {
-    //         displayName: 'Anya M',
-    //         username: 'anyamittal',
-    //     },
-    // ];
-
     const { data: suggestedUsers } = useQuery('suggestedUsers', async () => {
         const res = await axios.get(`${config.api}/users/suggested/users`, {
             headers: { authorization: `Bearer ${auth.token}` },
         });
         return res.data;
     });
-
-    // const { mutate } = useMutation(async (body) => {
-    //     await axios.post(`${config.api}/tweets/post`, body, {
-    //         headers: {
-    //             Authorization: `Bearer ${auth.token}`,
-    //         },
-    //     });
-
-    //     refetch();
-    //     setNewTweet('');
-    // });
 
     async function fetchSearchResults(e) {
         e.preventDefault();
