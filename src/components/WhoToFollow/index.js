@@ -11,7 +11,7 @@ const WhoToFollow = ({ users }) => {
                 height: 'auto',
                 bgcolor: '#F5F8FA',
                 marginTop: '25px',
-                padding: '10px',
+                padding: '20px',
                 borderRadius: '15px',
             }}
         >
