@@ -14,6 +14,7 @@ import TweetRepliesPage from '../views/TweetRepliesPage';
 import LikedByPage from '../views/LikingUsersPage';
 import RetweetedByPage from '../views/RetweetedByPage';
 import Layout from './Layout';
+import ComingSoon from '../views/ComingSoonPage';
 
 const GuardedRoute = ({ children }) => {
     const auth = localStorage.getItem('auth');
@@ -140,6 +141,36 @@ function Router() {
                         <GuardedRoute>
                             <Layout>
                                 <RetweetedByPage />
+                            </Layout>
+                        </GuardedRoute>
+                    }
+                />
+                <Route
+                    path="/bookmarks"
+                    element={
+                        <GuardedRoute>
+                            <Layout>
+                                <ComingSoon feature={'Bookmarks'} />
+                            </Layout>
+                        </GuardedRoute>
+                    }
+                />
+                <Route
+                    path="/messages"
+                    element={
+                        <GuardedRoute>
+                            <Layout>
+                                <ComingSoon feature={'Messages'} />
+                            </Layout>
+                        </GuardedRoute>
+                    }
+                />
+                <Route
+                    path="/notifications"
+                    element={
+                        <GuardedRoute>
+                            <Layout>
+                                <ComingSoon feature={'Notifications'} />
                             </Layout>
                         </GuardedRoute>
                     }

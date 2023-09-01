@@ -4,12 +4,10 @@ import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
-    Avatar,
     Drawer,
     List,
     ListItem,
     ListItemText,
-    ListItemAvatar,
     Typography,
     Box,
 } from '@mui/material';
@@ -22,17 +20,12 @@ import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import Person2Icon from '@mui/icons-material/Person2';
 import TwitterIcon from '@mui/icons-material/Twitter';
 
-import { UserContext } from '../../contexts/auth';
-
 import { TweetButton, LogoutButton } from '../Buttons';
 import UserWithoutBio from '../User/UserWithoutBio';
 
 const SideNavbar = () => {
-    const auth = useContext(UserContext);
-    const loggedInUser = auth.user;
+    const loggedInUser = JSON.parse(localStorage.getItem('auth')).user;
     const navigate = useNavigate();
-
-    // const [anchorEl, setAnchorEl] = useState(null);
 
     const DrawerContainer = styled('div')({
         overflow: 'auto',
@@ -49,10 +42,14 @@ const SideNavbar = () => {
         borderRadius: 10,
         margin: '10px 60px',
         cursor: 'pointer',
+        textDecoration: 'none',
         '&:hover': {
             backgroundColor: theme.palette.action.hover,
             borderRadius: 30,
             width: 'fit-content',
+        },
+        '&:active, &:visited': {
+            color: 'inherit',
         },
     }));
 
@@ -81,17 +78,7 @@ const SideNavbar = () => {
             >
                 {/* <Router> */}
                 <List sx={{ flexGrow: 1 }}>
-                    <ListItemButton
-                        p={2}
-                        sx={{
-                            cursor: 'pointer',
-                            width: 'fit-content',
-                            borderRadius: '50%!important',
-                            border: '1px solid red',
-                        }}
-                        component={Link}
-                        to="/home"
-                    >
+                    <ListItemButton component={Link} to="/home">
                         <TwitterIcon fontSize="large" color="primary" />
                     </ListItemButton>
                     <ListItemButton component={Link} to="/home">
@@ -104,25 +91,28 @@ const SideNavbar = () => {
                             primary={<NavOptions>Explore</NavOptions>}
                         />
                     </ListItemButton>
-                    <ListItemButton>
+                    <ListItemButton component={Link} to="/notifications">
                         <NotificationsIcon />
                         <ListItemText
                             primary={<NavOptions>Notifications</NavOptions>}
                         />
                     </ListItemButton>
-                    <ListItemButton>
+                    <ListItemButton component={Link} to="/messages">
                         <MailIcon />
                         <ListItemText
                             primary={<NavOptions>Messages</NavOptions>}
                         />
                     </ListItemButton>
-                    <ListItemButton>
+                    <ListItemButton component={Link} to="/bookmarks">
                         <BookmarksIcon />
                         <ListItemText
                             primary={<NavOptions>Bookmarks</NavOptions>}
                         />
                     </ListItemButton>
-                    <ListItemButton>
+                    <ListItemButton
+                        component={Link}
+                        to={`/${loggedInUser.username}`}
+                    >
                         <Person2Icon />
                         <ListItemText
                             primary={<NavOptions>Profile</NavOptions>}

@@ -33,7 +33,6 @@ const TweetContainer = styled('div')({
 });
 
 function Tweet({ tweet, displayName }) {
-    console.log(tweet);
     const auth = useContext(UserContext);
     const queryClient = useQueryClient();
     const navigate = useNavigate();
