@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -24,8 +24,13 @@ import { TweetButton, LogoutButton } from '../Buttons';
 import UserWithoutBio from '../User/UserWithoutBio';
 
 const SideNavbar = () => {
+    const [activeTab, setActiveTab] = useState('home');
     const loggedInUser = JSON.parse(localStorage.getItem('auth')).user;
     const navigate = useNavigate();
+
+    const handleTabChange = (tab) => {
+        setActiveTab(tab);
+    };
 
     const DrawerContainer = styled('div')({
         overflow: 'auto',
@@ -81,41 +86,120 @@ const SideNavbar = () => {
                     <ListItemButton component={Link} to="/home">
                         <TwitterIcon fontSize="large" color="primary" />
                     </ListItemButton>
-                    <ListItemButton component={Link} to="/home">
+                    <ListItemButton
+                        component={Link}
+                        to="/home"
+                        onClick={() => handleTabChange('home')}
+                    >
                         <HomeIcon />
-                        <ListItemText primary={<NavOptions>Home</NavOptions>} />
+                        <ListItemText
+                            primary={
+                                <NavOptions
+                                    sx={
+                                        activeTab === 'home'
+                                            ? { fontWeight: 'bold' }
+                                            : {}
+                                    }
+                                >
+                                    Home
+                                </NavOptions>
+                            }
+                        />
                     </ListItemButton>
-                    <ListItemButton>
+                    <ListItemButton onClick={() => handleTabChange('explore')}>
                         <TagIcon />
                         <ListItemText
-                            primary={<NavOptions>Explore</NavOptions>}
+                            primary={
+                                <NavOptions
+                                    sx={
+                                        activeTab === 'explore'
+                                            ? { fontWeight: 'bold' }
+                                            : {}
+                                    }
+                                >
+                                    Explore
+                                </NavOptions>
+                            }
                         />
                     </ListItemButton>
-                    <ListItemButton component={Link} to="/notifications">
+                    <ListItemButton
+                        component={Link}
+                        to="/notifications"
+                        onClick={() => handleTabChange('notifications')}
+                    >
                         <NotificationsIcon />
                         <ListItemText
-                            primary={<NavOptions>Notifications</NavOptions>}
+                            primary={
+                                <NavOptions
+                                    sx={
+                                        activeTab === 'notifications'
+                                            ? { fontWeight: 'bold' }
+                                            : {}
+                                    }
+                                >
+                                    Notifications
+                                </NavOptions>
+                            }
                         />
                     </ListItemButton>
-                    <ListItemButton component={Link} to="/messages">
+                    <ListItemButton
+                        component={Link}
+                        to="/messages"
+                        onClick={() => handleTabChange('messages')}
+                    >
                         <MailIcon />
                         <ListItemText
-                            primary={<NavOptions>Messages</NavOptions>}
+                            primary={
+                                <NavOptions
+                                    sx={
+                                        activeTab === 'messages'
+                                            ? { fontWeight: 'bold' }
+                                            : {}
+                                    }
+                                >
+                                    Messages
+                                </NavOptions>
+                            }
                         />
                     </ListItemButton>
-                    <ListItemButton component={Link} to="/bookmarks">
+                    <ListItemButton
+                        component={Link}
+                        to="/bookmarks"
+                        onClick={() => handleTabChange('bookmarks')}
+                    >
                         <BookmarksIcon />
                         <ListItemText
-                            primary={<NavOptions>Bookmarks</NavOptions>}
+                            primary={
+                                <NavOptions
+                                    sx={
+                                        activeTab === 'bookmarks'
+                                            ? { fontWeight: 'bold' }
+                                            : {}
+                                    }
+                                >
+                                    Bookmarks
+                                </NavOptions>
+                            }
                         />
                     </ListItemButton>
                     <ListItemButton
                         component={Link}
                         to={`/${loggedInUser.username}`}
+                        onClick={() => handleTabChange('profile')}
                     >
                         <Person2Icon />
                         <ListItemText
-                            primary={<NavOptions>Profile</NavOptions>}
+                            primary={
+                                <NavOptions
+                                    sx={
+                                        activeTab === 'profile'
+                                            ? { fontWeight: 'bold' }
+                                            : {}
+                                    }
+                                >
+                                    Profile
+                                </NavOptions>
+                            }
                         />
                     </ListItemButton>
                     <ListItem

@@ -23,8 +23,6 @@ const SearchResultsPage = () => {
     if (isLoading) return <span>Loading...</span>;
     if (isError) return <span>{error.message}</span>;
 
-    console.log(userSearchResults);
-
     return (
         <>
             <Link to={`/search/tweets?q=${searchQuery}`}>Tweets</Link>

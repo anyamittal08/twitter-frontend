@@ -8,7 +8,7 @@ const ComingSoon = ({ feature }) => {
                 <ListItem divider={true} sx={{ paddingTop: '0px' }}>
                     <Typography variant="h6">{feature}</Typography>
                 </ListItem>
-                <ListItem>This feature is coming.</ListItem>
+                <ListItem>This feature is coming soon.</ListItem>
             </List>
         </>
     );
