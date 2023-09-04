@@ -5,8 +5,7 @@ import { UserProvider } from '../contexts/auth';
 import HomePage from '../views/HomePage';
 import LoginPage from '../views/LoginPage';
 import ProfilePage from '../views/ProfilePage';
-import FollowersPage from '../views/FollowersPage';
-import FollowingPage from '../views/FollowingPage';
+import FollowersAndFollowingPage from '../views/FollowersAndFollowingPage';
 import LikesPage from '../views/LikesPage';
 import SearchResultsPage from '../views/SearchResultsPage';
 import TweetSearch from './TweetSearch';
@@ -80,7 +79,7 @@ function Router() {
                     element={
                         <GuardedRoute>
                             <Layout>
-                                <FollowersPage />
+                                <FollowersAndFollowingPage />
                             </Layout>
                         </GuardedRoute>
                     }
@@ -90,7 +89,7 @@ function Router() {
                     element={
                         <GuardedRoute>
                             <Layout>
-                                <FollowingPage />
+                                <FollowersAndFollowingPage />
                             </Layout>
                         </GuardedRoute>
                     }

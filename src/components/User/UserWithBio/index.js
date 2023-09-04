@@ -14,24 +14,24 @@ const User = ({ user }) => {
         <Container maxWidth="sm">
             <Grid container wrap="nowrap" spacing={2}>
                 <Grid item>
-                    <Avatar alt={`${user.username}-img`} />
+                    <Avatar alt={`${user?.username}-img`} />
                 </Grid>
                 <Grid container item xs zeroMinWidth>
                     <Grid container justifyContent="space-between">
                         <Grid maxWidth>
                             <Link
                                 component={ReactRouterLink}
-                                to={`/${user.username}`}
+                                to={`/${user?.username}`}
                                 underline="hover"
                                 color="black"
                                 sx={{ fontWeight: 'bold', cursor: 'pointer' }}
                             >
-                                {user.displayName}
+                                {user?.displayName}
                             </Link>
                             <Typography
                                 color="grey"
                                 fontSize="13px"
-                            >{`@${user.username}`}</Typography>
+                            >{`@${user?.username}`}</Typography>
                         </Grid>
                         <Grid>
                             <Stack direction="row" justifyContent="end">

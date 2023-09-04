@@ -1,33 +1,41 @@
 import axios from 'axios';
+import { useState } from 'react';
 import { useParams, Link as ReactRouterLink } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
 import config from '../../config';
 import UserList from '../UserListA';
-import { Divider, List, ListItem, Typography, Tab } from '@mui/material';
+import { List, ListItem, Typography, Tab } from '@mui/material';
 
-const FollowersPage = () => {
+const FollowersAndFollowingPage = () => {
     const { username } = useParams();
+    const [activeTab, setActiveTab] = useState('followers');
 
     const { data: userData } = useQuery('userData', () =>
         axios.get(`${config.api}/users/${username}`).then((res) => res.data)
     );
 
-    const { data: followerData } = useQuery(
-        `${username}Followers`,
+    const { data: userList } = useQuery(
+        `${username}${activeTab}`,
         async () => {
             const response = await axios.get(
-                `${config.api}/users/${userData?.id}/followers`
+                `${config.api}/users/${userData?.id}/${activeTab}`
             );
-            const responseArr = response.data.map(
-                (relationship) => relationship.follower
-            );
+            const responseArr = response.data.map((relationship) => {
+                const user =
+                    activeTab === 'followers'
+                        ? relationship.follower
+                        : relationship.targetUser;
+                return user;
+            });
             return responseArr;
         },
         {
             enabled: !!userData?.id,
         }
     );
+
+    console.log(userList);
 
     return (
         <>
@@ -49,7 +57,7 @@ const FollowersPage = () => {
                             color: '#657786',
                             fontSize: '0.9em',
                         }}
-                    >{`@${userData.username}`}</Typography>
+                    >{`@${userData?.username}`}</Typography>
                     <div
                         style={{
                             display: 'flex',
@@ -62,10 +70,15 @@ const FollowersPage = () => {
                     >
                         <Tab
                             label="followers"
+                            onClick={() => setActiveTab('followers')}
                             component={ReactRouterLink}
                             to={`/${username}/followers`}
                             sx={{
                                 color: '#657786',
+                                borderBottom:
+                                    activeTab === 'followers'
+                                        ? '5px solid #1DA1F2'
+                                        : '',
                                 '&:hover': {
                                     backgroundColor: '#E1E8ED',
                                 },
@@ -73,10 +86,15 @@ const FollowersPage = () => {
                         />
                         <Tab
                             label="following"
+                            onClick={() => setActiveTab('following')}
                             component={ReactRouterLink}
                             to={`/${username}/following`}
                             sx={{
                                 color: '#657786',
+                                borderBottom:
+                                    activeTab === 'following'
+                                        ? '5px solid #1DA1F2'
+                                        : '',
                                 '&:hover': {
                                     backgroundColor: '#E1E8ED',
                                 },
@@ -85,9 +103,9 @@ const FollowersPage = () => {
                     </div>
                 </ListItem>
             </List>
-            <UserList usersArr={followerData} />
+            <UserList usersArr={userList} />
         </>
     );
 };
 
-export default FollowersPage;
+export default FollowersAndFollowingPage;
