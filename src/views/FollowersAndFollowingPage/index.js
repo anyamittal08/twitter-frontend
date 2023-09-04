@@ -7,9 +7,9 @@ import config from '../../config';
 import UserList from '../UserListA';
 import { List, ListItem, Typography, Tab } from '@mui/material';
 
-const FollowersAndFollowingPage = () => {
+const FollowersAndFollowingPage = ({ startingTab }) => {
     const { username } = useParams();
-    const [activeTab, setActiveTab] = useState('followers');
+    const [activeTab, setActiveTab] = useState(startingTab);
 
     const { data: userData } = useQuery('userData', () =>
         axios.get(`${config.api}/users/${username}`).then((res) => res.data)

@@ -11,7 +11,7 @@ import { Link as ReactRouterLink } from 'react-router-dom';
 
 const User = ({ user }) => {
     return (
-        <Container maxWidth="sm">
+        <Container>
             <Grid container wrap="nowrap" spacing={2}>
                 <Grid item>
                     <Avatar alt={`${user?.username}-img`} />
@@ -34,9 +34,7 @@ const User = ({ user }) => {
                             >{`@${user?.username}`}</Typography>
                         </Grid>
                         <Grid>
-                            <Stack direction="row" justifyContent="end">
-                                <Button variant="contained">Following</Button>
-                            </Stack>
+                            <Stack direction="row" justifyContent="end"></Stack>
                         </Grid>
                     </Grid>
                     <Grid>

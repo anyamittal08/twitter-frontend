@@ -79,7 +79,7 @@ function Router() {
                     element={
                         <GuardedRoute>
                             <Layout>
-                                <FollowersAndFollowingPage />
+                                <FollowersAndFollowingPage startingTab="followers" />
                             </Layout>
                         </GuardedRoute>
                     }
@@ -89,7 +89,7 @@ function Router() {
                     element={
                         <GuardedRoute>
                             <Layout>
-                                <FollowersAndFollowingPage />
+                                <FollowersAndFollowingPage startingTab="following" />
                             </Layout>
                         </GuardedRoute>
                     }

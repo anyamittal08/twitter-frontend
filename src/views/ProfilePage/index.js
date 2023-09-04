@@ -24,7 +24,7 @@ function ProfilePage() {
     const { username } = useParams();
     const queryClient = useQueryClient();
 
-    const { data: userData } = useQuery(`userData`, () =>
+    const { data: userData } = useQuery(`${username}UserData`, () =>
         axios.get(`${config.api}/users/${username}`).then((res) => {
             return res.data;
         })
@@ -46,7 +46,7 @@ function ProfilePage() {
     );
 
     const { data: relationship } = useQuery(
-        `relationship`,
+        `${username}Relationship`,
         () =>
             axios
                 .get(`${config.api}/users/${userData?.id}/relationship`, {
@@ -75,9 +75,11 @@ function ProfilePage() {
         {
             onSuccess: () => {
                 queryClient.invalidateQueries({
-                    queryKey: [`relationship`],
+                    queryKey: [`${username}Relationship`],
                 });
-                queryClient.invalidateQueries({ queryKey: ['userData'] });
+                queryClient.invalidateQueries({
+                    queryKey: [`${username}UserData`],
+                });
             },
         }
     );
@@ -93,9 +95,11 @@ function ProfilePage() {
         {
             onSuccess: () => {
                 queryClient.invalidateQueries({
-                    queryKey: [`relationship`],
+                    queryKey: [`${username}Relationship`],
                 });
-                queryClient.invalidateQueries({ queryKey: ['userData'] });
+                queryClient.invalidateQueries({
+                    queryKey: [`${username}UserData`],
+                });
             },
         }
     );
