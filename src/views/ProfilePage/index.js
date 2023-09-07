@@ -287,6 +287,10 @@ function ProfilePage() {
                                         onClick={() => setActiveTab('tweets')}
                                         sx={{
                                             color: '#657786',
+                                            borderBottom:
+                                                activeTab === 'tweets'
+                                                    ? '5px solid #1DA1F2'
+                                                    : '',
                                             '&:hover': {
                                                 backgroundColor: '#E1E8ED',
                                             },
@@ -296,6 +300,10 @@ function ProfilePage() {
                                         label="Media"
                                         sx={{
                                             color: '#657786',
+                                            borderBottom:
+                                                activeTab === 'media'
+                                                    ? '5px solid #1DA1F2'
+                                                    : '',
                                             '&:hover': {
                                                 backgroundColor: '#E1E8ED',
                                             },
@@ -308,6 +316,10 @@ function ProfilePage() {
                                         onClick={() => setActiveTab('likes')}
                                         sx={{
                                             color: '#657786',
+                                            borderBottom:
+                                                activeTab === 'likes'
+                                                    ? '5px solid #1DA1F2'
+                                                    : '',
                                             '&:hover': {
                                                 backgroundColor: '#E1E8ED',
                                             },
