@@ -293,15 +293,6 @@ function ProfilePage() {
                                         }}
                                     />
                                     <Tab
-                                        label="Replies"
-                                        sx={{
-                                            color: '#657786',
-                                            '&:hover': {
-                                                backgroundColor: '#E1E8ED',
-                                            },
-                                        }}
-                                    />
-                                    <Tab
                                         label="Media"
                                         sx={{
                                             color: '#657786',
