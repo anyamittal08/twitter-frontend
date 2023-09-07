@@ -69,7 +69,7 @@ function Router() {
                     element={
                         <GuardedRoute>
                             <Layout>
-                                <LikesPage />
+                                <ProfilePage />
                             </Layout>
                         </GuardedRoute>
                     }

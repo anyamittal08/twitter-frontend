@@ -2,7 +2,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { useParams, Link as ReactRouterLink } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 import { Avatar, Box, Divider, Link, Tab, Typography } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -22,6 +22,7 @@ function ProfilePage() {
     const authenticatedUser = JSON.parse(localStorage.getItem('auth')).user;
     const auth = useContext(UserContext);
     const { username } = useParams();
+    const [activeTab, setActiveTab] = useState('tweets');
     const queryClient = useQueryClient();
 
     const { data: userData } = useQuery(`${username}UserData`, () =>
@@ -31,10 +32,10 @@ function ProfilePage() {
     );
 
     const { data: tweets } = useQuery(
-        `${username}Tweets`,
+        `${username}${activeTab}`,
         () =>
             axios
-                .get(`${config.api}/users/${userData?.id}/tweets`, {
+                .get(`${config.api}/users/${userData?.id}/${activeTab}`, {
                     headers: { authorization: `Bearer ${auth.token}` },
                 })
                 .then((res) => {
@@ -44,6 +45,8 @@ function ProfilePage() {
             enabled: !!userData?.id,
         }
     );
+
+    console.log(tweets);
 
     const { data: relationship } = useQuery(
         `${username}Relationship`,
@@ -281,6 +284,7 @@ function ProfilePage() {
                                 >
                                     <Tab
                                         label="Tweets"
+                                        onClick={() => setActiveTab('tweets')}
                                         sx={{
                                             color: '#657786',
                                             '&:hover': {
@@ -310,6 +314,7 @@ function ProfilePage() {
                                         label="Likes"
                                         component={ReactRouterLink}
                                         to={`/${username}/likes`}
+                                        onClick={() => setActiveTab('likes')}
                                         sx={{
                                             color: '#657786',
                                             '&:hover': {
