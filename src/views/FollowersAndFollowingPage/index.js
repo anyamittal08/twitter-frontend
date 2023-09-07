@@ -11,7 +11,7 @@ const FollowersAndFollowingPage = ({ startingTab }) => {
     const { username } = useParams();
     const [activeTab, setActiveTab] = useState(startingTab);
 
-    const { data: userData } = useQuery('userData', () =>
+    const { data: userData } = useQuery(`${username}Data`, () =>
         axios.get(`${config.api}/users/${username}`).then((res) => res.data)
     );
 
@@ -34,8 +34,6 @@ const FollowersAndFollowingPage = ({ startingTab }) => {
             enabled: !!userData?.id,
         }
     );
-
-    console.log(userList);
 
     return (
         <>
