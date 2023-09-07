@@ -51,8 +51,7 @@ function Tweet({ tweet, displayName }) {
         },
         {
             onSuccess: () => {
-                queryClient.invalidateQueries({ queryKey: ['tweets'] });
-                queryClient.invalidateQueries({ queryKey: ['feed'] });
+                queryClient.invalidateQueries();
             },
         }
     );
@@ -67,8 +66,7 @@ function Tweet({ tweet, displayName }) {
         },
         {
             onSuccess: () => {
-                queryClient.invalidateQueries({ queryKey: ['tweets'] });
-                queryClient.invalidateQueries({ queryKey: ['feed'] });
+                queryClient.invalidateQueries();
             },
         }
     );
@@ -93,8 +91,7 @@ function Tweet({ tweet, displayName }) {
         },
         {
             onSuccess: () => {
-                queryClient.invalidateQueries({ queryKey: ['feed'] });
-                queryClient.invalidateQueries({ queryKey: ['tweets'] });
+                queryClient.invalidateQueries();
             },
         }
     );
@@ -113,8 +110,7 @@ function Tweet({ tweet, displayName }) {
         },
         {
             onSuccess: () => {
-                queryClient.invalidateQueries({ queryKey: ['feed'] });
-                queryClient.invalidateQueries({ queryKey: ['tweets'] });
+                queryClient.invalidateQueries();
             },
         }
     );
