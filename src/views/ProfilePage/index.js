@@ -133,7 +133,7 @@ function ProfilePage() {
                             fontSize: '0.9em',
                         }}
                     >
-                        {`${tweets?.length} posts`}
+                        {`${tweets?.length} ${activeTab}`}
                     </p>
                 </div>
                 <div className="profileHeader">
