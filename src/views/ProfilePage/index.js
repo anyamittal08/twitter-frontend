@@ -278,7 +278,7 @@ function ProfilePage() {
                                 <div
                                     style={{
                                         display: 'flex',
-                                        justifyContent: 'space-between',
+                                        justifyContent: 'space-around',
                                         color: '#657786',
                                     }}
                                 >
@@ -296,19 +296,7 @@ function ProfilePage() {
                                             },
                                         }}
                                     />
-                                    <Tab
-                                        label="Media"
-                                        sx={{
-                                            color: '#657786',
-                                            borderBottom:
-                                                activeTab === 'media'
-                                                    ? '5px solid #1DA1F2'
-                                                    : '',
-                                            '&:hover': {
-                                                backgroundColor: '#E1E8ED',
-                                            },
-                                        }}
-                                    />
+
                                     <Tab
                                         label="Likes"
                                         component={ReactRouterLink}
