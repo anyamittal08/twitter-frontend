@@ -6,7 +6,6 @@ import HomePage from '../views/HomePage';
 import LoginPage from '../views/LoginPage';
 import ProfilePage from '../views/ProfilePage';
 import FollowersAndFollowingPage from '../views/FollowersAndFollowingPage';
-import LikesPage from '../views/LikesPage';
 import SearchResultsPage from '../views/SearchResultsPage';
 import TweetSearch from './TweetSearch';
 import TweetRepliesPage from '../views/TweetRepliesPage';
