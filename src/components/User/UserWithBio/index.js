@@ -6,12 +6,28 @@ import {
     Typography,
     Stack,
     Link,
+    styled,
 } from '@mui/material';
 import { Link as ReactRouterLink } from 'react-router-dom';
 
+const UserContainer = styled('div')({
+    minHeight: '68px',
+    padding: '10px',
+    display: 'flex',
+    flexDirection: 'column',
+    fontFamily: 'Helvetica',
+    fontSize: '14px',
+    lineHeight: '18px',
+    paddingBottom: '0px',
+    cursor: 'pointer',
+    '&:hover': {
+        backgroundColor: '#F5F8FA',
+    },
+});
+
 const User = ({ user }) => {
     return (
-        <Container>
+        <UserContainer>
             <Grid container wrap="nowrap" spacing={2}>
                 <Grid item>
                     <Avatar alt={`${user?.username}-img`} />
@@ -48,7 +64,7 @@ const User = ({ user }) => {
                     </Grid>
                 </Grid>
             </Grid>
-        </Container>
+        </UserContainer>
     );
 };
 

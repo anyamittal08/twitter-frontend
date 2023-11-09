@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { ListItemAvatar, Avatar, Link, Divider } from '@mui/material';
+import { Avatar, Divider } from '@mui/material';
 import { styled } from '@mui/system';
 
 import config from '../../config';

@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import axios from 'axios';
 
 import { Link as ReactRouterLink } from 'react-router-dom';
-import { Tab, TextField, styled } from '@mui/material';
+import { Tab, TextField, styled, Divider } from '@mui/material';
 
 import config from '../../config';
 
@@ -12,6 +12,7 @@ import TweetList from '../../components/TweetList';
 
 const Searchbar = styled(TextField)(({ theme }) => ({
     marginTop: '20px',
+    width: '100%',
     '& .MuiOutlinedInput-root': {
         '& fieldset': {
             borderRadius: '25px',
@@ -48,15 +49,21 @@ const SearchResultsPage = ({ startingTab }) => {
 
     return (
         <>
-            <form onSubmit={handleFormSubmit}>
-                <Searchbar
-                    value={searchQuery}
-                    label="Search Twitter"
-                    variant="outlined"
-                    fullWidth
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                />
-            </form>
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                }}
+            >
+                <form onSubmit={handleFormSubmit} style={{ width: '90%' }}>
+                    <Searchbar
+                        value={searchQuery}
+                        label="Search Twitter"
+                        variant="outlined"
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                </form>
+            </div>
             <div
                 style={{
                     display: 'flex',
@@ -96,6 +103,7 @@ const SearchResultsPage = ({ startingTab }) => {
                     }}
                 />
             </div>
+            <Divider />
             {activeTab === 'users' ? (
                 <UserList usersArr={searchResults} />
             ) : (
