@@ -108,7 +108,7 @@ function Router() {
                     element={
                         <GuardedRoute>
                             <Layout>
-                                <SearchResultsPage />
+                                <SearchResultsPage startingTab="users" />
                             </Layout>
                         </GuardedRoute>
                     }
@@ -118,7 +118,7 @@ function Router() {
                     element={
                         <GuardedRoute>
                             <Layout>
-                                <TweetSearch />
+                                <SearchResultsPage startingTab="tweets" />
                             </Layout>
                         </GuardedRoute>
                     }

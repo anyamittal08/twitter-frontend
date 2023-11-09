@@ -46,10 +46,9 @@ const SidebarRight = () => {
 
     async function fetchSearchResults(e) {
         e.preventDefault();
-        console.log('here');
         await axios
-            .get(`${config.api}/tweets/search/${searchQuery}`)
-            .then((res) => console.log(res.data));
+            .get(`${config.api}/users/search/${searchQuery}`)
+            .then((res) => res.data);
 
         navigate(`/search?q=${searchQuery}`);
 
