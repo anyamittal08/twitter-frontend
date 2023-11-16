@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 
-import { Link as ReactRouterLink } from 'react-router-dom';
-import { Tab, TextField, styled, Divider } from '@mui/material';
+import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
+import { Tab, TextField, styled, Divider, Typography } from '@mui/material';
 
 import config from '../../config';
 
@@ -23,6 +23,7 @@ const Searchbar = styled(TextField)(({ theme }) => ({
 const SearchResultsPage = ({ startingTab }) => {
     const queryParams = new URLSearchParams(window.location.search);
     const [searchQuery, setSearchQuery] = useState(queryParams.get('q'));
+    const navigate = useNavigate();
 
     const [activeTab, setActiveTab] = useState(startingTab);
 
@@ -41,6 +42,7 @@ const SearchResultsPage = ({ startingTab }) => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
+        navigate(`/search?q=${searchQuery}`);
         refetch();
     };
 
@@ -104,7 +106,11 @@ const SearchResultsPage = ({ startingTab }) => {
                 />
             </div>
             <Divider />
-            {activeTab === 'users' ? (
+            {searchResults.length === 0 ? (
+                <Typography sx={{ padding: '10px' }}>
+                    No results found.
+                </Typography>
+            ) : activeTab === 'users' ? (
                 <UserList usersArr={searchResults} />
             ) : (
                 <TweetList tweets={searchResults} />

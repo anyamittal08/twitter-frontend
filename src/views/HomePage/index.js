@@ -16,6 +16,7 @@ import config from '../../config';
 import { UserContext } from '../../contexts/auth';
 import Tweet from '../../components/Tweet';
 import { TweetButton } from '../../components/Buttons';
+import { LoadingState, ErrorState } from '../../components/StatusComponents';
 
 function HomePage() {
     const auth = useContext(UserContext);
@@ -44,9 +45,6 @@ function HomePage() {
         refetch();
         setNewTweet('');
     });
-
-    if (isLoading) return <div>loading...</div>;
-    if (error) return <div>error!!</div>;
 
     const postTweet = (e) => {
         e.preventDefault();
@@ -100,9 +98,15 @@ function HomePage() {
                     </div>
                 </ListItem>
                 <Divider />
-                {tweets.data.map((tweet) => (
-                    <Tweet tweet={tweet} key={tweet._id} />
-                ))}
+                {isLoading ? (
+                    <LoadingState />
+                ) : error ? (
+                    <ErrorState />
+                ) : (
+                    tweets.data.map((tweet) => (
+                        <Tweet tweet={tweet} key={tweet._id} />
+                    ))
+                )}
             </List>
             <Divider orientation="vertical" flexItem />
         </>
