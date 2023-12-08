@@ -186,16 +186,18 @@ const SideNavbar = () => {
                         component={Link}
                         to={`/${loggedInUser.username}`}
                         onClick={() => handleTabChange('profile')}
+                        sx={{ color: 'black' }}
                     >
                         <Person2Icon />
                         <ListItemText
                             primary={
                                 <NavOptions
-                                    sx={
-                                        activeTab === 'profile'
-                                            ? { fontWeight: 'bold' }
-                                            : {}
-                                    }
+                                    sx={{
+                                        fontWeight:
+                                            activeTab === 'profile'
+                                                ? 'bold'
+                                                : 'normal',
+                                    }}
                                 >
                                     Profile
                                 </NavOptions>

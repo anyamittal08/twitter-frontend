@@ -9,4 +9,4 @@ npm run build
 aws s3 sync ./build s3://twitter.anyamittal.com/ --delete --exclude *.map
 
 # invalidate cache
-aws cloudfront create-invalidation --distribution-id E15YHAZR68UAY8 --path "/*"
+aws cloudfront create-invalidation --distribution-id E1M0372DKOX3S5 --path "/*"

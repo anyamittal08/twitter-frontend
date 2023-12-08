@@ -46,8 +46,6 @@ function ProfilePage() {
         }
     );
 
-    console.log(tweets);
-
     const { data: relationship } = useQuery(
         `${username}Relationship`,
         () =>
