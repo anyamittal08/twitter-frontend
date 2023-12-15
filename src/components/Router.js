@@ -7,12 +7,12 @@ import LoginPage from '../views/LoginPage';
 import ProfilePage from '../views/ProfilePage';
 import FollowersAndFollowingPage from '../views/FollowersAndFollowingPage';
 import SearchResultsPage from '../views/SearchResultsPage';
-import TweetSearch from './TweetSearch';
 import TweetRepliesPage from '../views/TweetRepliesPage';
 import LikedByPage from '../views/LikingUsersPage';
 import RetweetedByPage from '../views/RetweetedByPage';
 import Layout from './Layout';
 import ComingSoon from '../views/ComingSoonPage';
+import SuggestedUsers from '../views/SuggestedUsersPage';
 
 const GuardedRoute = ({ children }) => {
     const auth = localStorage.getItem('auth');
@@ -169,6 +169,16 @@ function Router() {
                         <GuardedRoute>
                             <Layout>
                                 <ComingSoon feature={'Notifications'} />
+                            </Layout>
+                        </GuardedRoute>
+                    }
+                />
+                <Route
+                    path="/suggested"
+                    element={
+                        <GuardedRoute>
+                            <Layout>
+                                <SuggestedUsers />
                             </Layout>
                         </GuardedRoute>
                     }

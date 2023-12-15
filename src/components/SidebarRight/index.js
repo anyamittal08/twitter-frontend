@@ -41,7 +41,7 @@ const SidebarRight = () => {
         const res = await axios.get(`${config.api}/users/suggested/users`, {
             headers: { authorization: `Bearer ${auth.token}` },
         });
-        return res.data;
+        return res.data.slice(0, 3);
     });
 
     async function fetchSearchResults(e) {

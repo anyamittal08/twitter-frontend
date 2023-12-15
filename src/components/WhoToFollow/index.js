@@ -25,7 +25,6 @@ const WhoToFollow = ({ users }) => {
             </Typography>
             <List sx={{ width: '100%', paddingBottom: '0px' }}>
                 {users?.map((user) => {
-                    console.log(user);
                     return <UserWithoutBio user={user} />;
                 })}
                 <ListItem
@@ -46,6 +45,7 @@ const WhoToFollow = ({ users }) => {
                             textDecoration: 'none',
                         }}
                         component={Link}
+                        to={`/suggested`}
                     >
                         Show more
                     </Typography>
