@@ -2,7 +2,6 @@ import { List, ListItem, Paper, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import UserWithoutBio from '../User/UserWithoutBio';
-import { FollowButton } from '../Buttons';
 
 const WhoToFollow = ({ users }) => {
     return (
@@ -25,21 +24,10 @@ const WhoToFollow = ({ users }) => {
                 Who to follow
             </Typography>
             <List sx={{ width: '100%', paddingBottom: '0px' }}>
-                {users?.map((user) => (
-                    <ListItem
-                        component={Link}
-                        to={`/${user.username}`}
-                        sx={{
-                            width: '100%',
-                            textDecoration: 'none',
-                            color: 'black',
-                            '&:hover': { backgroundColor: '#E1E8ED' },
-                        }}
-                    >
-                        <UserWithoutBio user={user} action={'Follow'} />
-                        <FollowButton />
-                    </ListItem>
-                ))}
+                {users?.map((user) => {
+                    console.log(user);
+                    return <UserWithoutBio user={user} />;
+                })}
                 <ListItem
                     component={Link}
                     sx={{
