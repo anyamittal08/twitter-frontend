@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useMutation } from 'react-query';
 
 import config from '../../../config';
@@ -8,7 +8,7 @@ import { UserContext } from '../../../contexts/auth';
 import { Avatar, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
-import { FollowButton } from '../../Buttons';
+import { FollowButton, FollowingButton } from '../../Buttons';
 
 const StyledListItemText = styled(ListItemText)(({}) => ({
     '& .MuiListItemText-primary:hover': {
@@ -18,6 +18,7 @@ const StyledListItemText = styled(ListItemText)(({}) => ({
 
 const UserWithoutBio = ({ user }) => {
     const auth = useContext(UserContext);
+    const [isFollowed, setIsFollowed] = useState(false);
 
     const { mutate: followUser } = useMutation(async () => {
         await axios.post(
@@ -32,7 +33,7 @@ const UserWithoutBio = ({ user }) => {
     });
 
     const { mutate: unfollowUser } = useMutation(async () => {
-        await axios.delete(`${config.api}/users/${user?.id}/unfollow`, {
+        await axios.delete(`${config.api}/users/${user?._id}/unfollow`, {
             headers: {
                 Authorization: `Bearer ${auth.token}`,
             },
@@ -43,6 +44,14 @@ const UserWithoutBio = ({ user }) => {
         e.preventDefault();
         e.stopPropagation();
         followUser();
+        setIsFollowed(true);
+    };
+
+    const handleUnfollow = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        unfollowUser();
+        setIsFollowed(false);
     };
 
     return (
@@ -63,7 +72,11 @@ const UserWithoutBio = ({ user }) => {
                 primary={user.displayName}
                 secondary={`@${user.username}`}
             />
-            <FollowButton onClick={handleFollow} />
+            {isFollowed ? (
+                <FollowingButton onClick={handleUnfollow} />
+            ) : (
+                <FollowButton onClick={handleFollow} />
+            )}
         </ListItem>
     );
 };
