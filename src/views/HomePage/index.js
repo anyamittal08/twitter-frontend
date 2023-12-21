@@ -17,6 +17,7 @@ import { UserContext } from '../../contexts/auth';
 import Tweet from '../../components/Tweet';
 import { TweetButton } from '../../components/Buttons';
 import { LoadingState, ErrorState } from '../../components/StatusComponents';
+import Gravatar from '../../components/Gravatar';
 
 function HomePage() {
     const auth = useContext(UserContext);
@@ -34,6 +35,8 @@ function HomePage() {
             headers: { authorization: `Bearer ${auth.token}` },
         })
     );
+
+    console.log(auth);
 
     const { mutate } = useMutation(async (body) => {
         await axios.post(`${config.api}/tweets/post`, body, {
@@ -73,7 +76,10 @@ function HomePage() {
                             }}
                         >
                             <ListItemAvatar>
-                                <Avatar />
+                                <Gravatar
+                                    email={auth.user.email}
+                                    username={auth.user.username}
+                                />
                             </ListItemAvatar>
                             <TextField
                                 variant="standard"

@@ -9,6 +9,7 @@ import { Avatar, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { FollowButton, FollowingButton } from '../../Buttons';
+import Gravatar from '../../Gravatar';
 
 const StyledListItemText = styled(ListItemText)(({}) => ({
     '& .MuiListItemText-primary:hover': {
@@ -66,7 +67,7 @@ const UserWithoutBio = ({ user }) => {
             }}
         >
             <ListItemAvatar>
-                <Avatar />
+                <Gravatar email={user.email} username={user.username} />
             </ListItemAvatar>
             <StyledListItemText
                 primary={user.displayName}

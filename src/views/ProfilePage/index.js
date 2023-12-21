@@ -4,13 +4,14 @@ import { useParams, Link as ReactRouterLink } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { useContext, useState } from 'react';
 
-import { Avatar, Box, Divider, Link, Tab, Typography } from '@mui/material';
+import { Box, Divider, Link, Tab, Typography } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 import config from '../../config';
 import { UserContext } from '../../contexts/auth';
 
 import TweetList from '../../components/TweetList';
+import Gravatar from '../../components/Gravatar';
 
 import {
     EditProfileButton,
@@ -158,12 +159,14 @@ function ProfilePage() {
                                     left: '15px',
                                 }}
                             >
-                                <Avatar
-                                    sx={{
+                                <Gravatar
+                                    style={{
                                         width: 125,
                                         height: 125,
                                         border: '3px solid white',
                                     }}
+                                    email={userData?.email}
+                                    alt={userData?.username}
                                 />
                             </div>
                             <div

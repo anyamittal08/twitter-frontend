@@ -1,5 +1,4 @@
 import {
-    Avatar,
     Button,
     Container,
     Grid,
@@ -9,6 +8,7 @@ import {
     styled,
 } from '@mui/material';
 import { Link as ReactRouterLink } from 'react-router-dom';
+import Gravatar from '../../Gravatar';
 
 const UserContainer = styled('div')({
     minHeight: '68px',
@@ -30,7 +30,7 @@ const User = ({ user }) => {
         <UserContainer>
             <Grid container wrap="nowrap" spacing={2}>
                 <Grid item>
-                    <Avatar alt={`${user?.username}-img`} />
+                    <Gravatar username={user.username} email={user.email} />
                 </Grid>
                 <Grid container item xs zeroMinWidth>
                     <Grid container justifyContent="space-between">

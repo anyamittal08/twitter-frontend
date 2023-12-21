@@ -16,6 +16,7 @@ import {
     MoreOptionsButton,
 } from '../Buttons';
 import { Message, Author, Retweeters, Time } from '../TweetComponents';
+import Gravatar from '../Gravatar';
 
 const TweetContainer = styled('div')({
     minHeight: '68px',
@@ -32,7 +33,7 @@ const TweetContainer = styled('div')({
     },
 });
 
-function Tweet({ tweet, displayName }) {
+function Tweet({ tweet }) {
     const auth = useContext(UserContext);
     const queryClient = useQueryClient();
     const navigate = useNavigate();
@@ -150,10 +151,10 @@ function Tweet({ tweet, displayName }) {
                             alignItems: 'center',
                         }}
                     >
-                        <Avatar
-                            className="avatar"
-                            alt="profile-pic"
-                            sx={{ marginRight: '0px' }}
+                        <Gravatar
+                            email={tweet?.author.email}
+                            alt={tweet?.author.username}
+                            style={{ marginRight: '0px' }}
                         />
                         <>
                             {tweet?.isThread ? (
