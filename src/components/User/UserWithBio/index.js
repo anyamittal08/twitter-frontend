@@ -1,12 +1,4 @@
-import {
-    Button,
-    Container,
-    Grid,
-    Typography,
-    Stack,
-    Link,
-    styled,
-} from '@mui/material';
+import { Grid, Typography, Stack, Link, styled } from '@mui/material';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import Gravatar from '../../Gravatar';
 

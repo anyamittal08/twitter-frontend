@@ -21,6 +21,7 @@ import { UserContext } from '../../contexts/auth';
 import Tweet from '../../components/Tweet';
 import { TweetButton } from '../../components/Buttons';
 import TweetList from '../../components/TweetList';
+import Gravatar from '../../components/Gravatar';
 
 const TweetRepliesPage = ({}) => {
     const auth = useContext(UserContext);
@@ -110,7 +111,10 @@ const TweetRepliesPage = ({}) => {
                     gap: '15px',
                 }}
             >
-                <Avatar />
+                <Gravatar
+                    email={auth.user.email}
+                    username={auth.user.username}
+                />
                 <TextField
                     hiddenLabel
                     variant="standard"
