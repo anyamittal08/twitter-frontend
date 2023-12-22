@@ -16,10 +16,12 @@ import Tweet from '../../components/Tweet';
 import { TweetButton } from '../../components/Buttons';
 import { LoadingState, ErrorState } from '../../components/StatusComponents';
 import Gravatar from '../../components/Gravatar';
+import TweetSuccessSnackbar from '../../components/TweetSuccessSnackbar';
 
 function HomePage() {
     const auth = useContext(UserContext);
     const [newTweet, setNewTweet] = useState('');
+    const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
 
     const {
         isLoading,
@@ -46,6 +48,11 @@ function HomePage() {
     const postTweet = (e) => {
         e.preventDefault();
         mutate({ content: newTweet });
+        setOpenSuccessSnackbar(true);
+    };
+
+    const closeSuccessSnackbar = () => {
+        setOpenSuccessSnackbar(false);
     };
 
     return (
@@ -108,6 +115,10 @@ function HomePage() {
                     ))
                 )}
             </List>
+            <TweetSuccessSnackbar
+                open={openSuccessSnackbar}
+                close={closeSuccessSnackbar}
+            />
             <Divider orientation="vertical" flexItem />
         </>
     );
