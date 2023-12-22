@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 import {
     List,
@@ -8,7 +7,6 @@ import {
     ListItem,
     Typography,
     ListItemAvatar,
-    Avatar,
     TextField,
 } from '@mui/material';
 
@@ -22,8 +20,6 @@ import Gravatar from '../../components/Gravatar';
 function HomePage() {
     const auth = useContext(UserContext);
     const [newTweet, setNewTweet] = useState('');
-
-    const navigate = useNavigate();
 
     const {
         isLoading,
