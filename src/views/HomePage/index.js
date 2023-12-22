@@ -36,8 +36,6 @@ function HomePage() {
         })
     );
 
-    console.log(auth);
-
     const { mutate } = useMutation(async (body) => {
         await axios.post(`${config.api}/tweets/post`, body, {
             headers: {
@@ -62,7 +60,7 @@ function HomePage() {
                     <Typography variant="h6">Home</Typography>
                 </ListItem>
                 <ListItem>
-                    <div
+                    <form
                         style={{
                             display: 'flex',
                             flexDirection: 'column',
@@ -101,7 +99,7 @@ function HomePage() {
                         >
                             <TweetButton width="100px" onClick={postTweet} />
                         </div>
-                    </div>
+                    </form>
                 </ListItem>
                 <Divider />
                 {isLoading ? (
