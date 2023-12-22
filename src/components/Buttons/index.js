@@ -91,6 +91,7 @@ const TweetButton = ({ width, onClick }) => (
         color="primary"
         sx={{ width: width }}
         onClick={onClick}
+        type="submit"
     >
         <ButtonText>Tweet</ButtonText>
     </BasicButton>
@@ -129,9 +130,13 @@ const LikeButton = ({ liked, likeCount, onClick }) => (
         <p>{likeCount}</p>
     </div>
 );
-const MoreOptionsButton = () => (
+const MoreOptionsButton = ({ clickHandler }) => (
     <div style={{ display: 'flex', alignItems: 'center' }}>
-        <FontAwesomeIcon style={{ cursor: 'pointer' }} icon={faEllipsis} />
+        <FontAwesomeIcon
+            style={{ cursor: 'pointer' }}
+            icon={faEllipsis}
+            onClick={clickHandler}
+        />
     </div>
 );
 

@@ -198,7 +198,11 @@ function Tweet({ tweet }) {
                                 likeCount={tweet?.likeCount}
                                 liked={tweet?.liked}
                             />
-                            <MoreOptionsButton />
+                            {tweet?.author.username === auth.user.username ? (
+                                <MoreOptionsButton />
+                            ) : (
+                                <></>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -3,17 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-query';
 
 import axios from 'axios';
-import { Avatar, Divider, TextField, Typography } from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faHeart as faHeartOutline,
-    faComment,
-} from '@fortawesome/free-regular-svg-icons';
-import {
-    faRetweet,
-    faHeart as faHeartSolid,
-    faEllipsis,
-} from '@fortawesome/free-solid-svg-icons';
+import { Divider, TextField } from '@mui/material';
 
 import config from '../../config';
 
