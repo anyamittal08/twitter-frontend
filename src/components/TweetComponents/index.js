@@ -17,7 +17,7 @@ const Author = ({ author }) => {
         <span className="author">
             <Link
                 component={ReactRouterLink}
-                to={`/${author?.displayName}`}
+                to={`/${author?.username}`}
                 onClick={(e) => e.stopPropagation()}
                 underline="hover"
                 color="black"
