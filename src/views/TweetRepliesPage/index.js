@@ -93,8 +93,7 @@ const TweetRepliesPage = ({}) => {
             {/* <div className="actionBtns">
 
                 </div> */}
-            <div
-                className="replyField"
+            <form
                 style={{
                     display: 'flex',
                     margin: '20px 15px',
@@ -119,7 +118,7 @@ const TweetRepliesPage = ({}) => {
                     onChange={(e) => setNewReply(e.target.value)}
                 />
                 <TweetButton onClick={postReply} />
-            </div>
+            </form>
             <Divider />
             <div className="thread">
                 <TweetList tweets={threadArr} />
