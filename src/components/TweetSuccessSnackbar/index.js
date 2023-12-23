@@ -1,9 +1,10 @@
-import { Snackbar, Typography, Alert, Link } from '@mui/material';
+import { Link } from 'react-router-dom';
 
-const TweetSuccessSnackbar = ({ open, close }) => {
+import { Snackbar, Typography, Alert } from '@mui/material';
+
+const TweetSuccessSnackbar = ({ open, close, tweet }) => {
     return (
         <div>
-            {/* <Button onClick={handleClick}>Open snackbar</Button> */}
             <Snackbar
                 open={open}
                 autoHideDuration={4000}
@@ -21,9 +22,14 @@ const TweetSuccessSnackbar = ({ open, close }) => {
                     }}
                     icon={false}
                     action={
-                        <Link color="#fff" sx={{ cursor: 'pointer' }}>
+                        <Typography
+                            component={Link}
+                            to={`/${tweet?.author?.username}/status/${tweet?._id}`}
+                            color="#fff"
+                            style={{ cursor: 'pointer' }}
+                        >
                             View
-                        </Link>
+                        </Typography>
                     }
                 >
                     <Typography

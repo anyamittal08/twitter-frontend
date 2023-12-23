@@ -17,10 +17,12 @@ import { TweetButton } from '../../components/Buttons';
 import { LoadingState, ErrorState } from '../../components/StatusComponents';
 import Gravatar from '../../components/Gravatar';
 import TweetSuccessSnackbar from '../../components/TweetSuccessSnackbar';
+import { AttachMoney } from '@mui/icons-material';
 
 function HomePage() {
     const auth = useContext(UserContext);
     const [newTweet, setNewTweet] = useState('');
+    const [newTweetData, setNewTweetData] = useState({});
     const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
 
     const {
@@ -34,16 +36,24 @@ function HomePage() {
         })
     );
 
-    const { mutate } = useMutation(async (body) => {
-        await axios.post(`${config.api}/tweets/post`, body, {
-            headers: {
-                Authorization: `Bearer ${auth.token}`,
+    const { mutate } = useMutation(
+        async (body) => {
+            const tweet = await axios.post(`${config.api}/tweets/post`, body, {
+                headers: {
+                    Authorization: `Bearer ${auth.token}`,
+                },
+            });
+            return tweet.data;
+        },
+        {
+            onSuccess: (tweet) => {
+                setNewTweetData(tweet);
+                refetch();
+                setNewTweet('');
+                setOpenSuccessSnackbar(true);
             },
-        });
-
-        refetch();
-        setNewTweet('');
-    });
+        }
+    );
 
     const postTweet = (e) => {
         e.preventDefault();
@@ -118,6 +128,7 @@ function HomePage() {
             <TweetSuccessSnackbar
                 open={openSuccessSnackbar}
                 close={closeSuccessSnackbar}
+                tweet={newTweetData}
             />
             <Divider orientation="vertical" flexItem />
         </>
