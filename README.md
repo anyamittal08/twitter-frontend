@@ -1,4 +1,4 @@
-This repo is the frontend of my Twitter clone project built in React. The project can be found [here](twitter.anyamittal.com).
+This repo is the frontend of my Twitter clone project built in React. The project can be found [here](https://twitter.anyamittal.com/).
 
 ### Features
 - Login/Sign up forms
